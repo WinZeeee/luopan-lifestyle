@@ -51,14 +51,10 @@ const Shop = () => {
   return (
     <div className="min-h-screen animate-fade-in py-16">
       <div className="container px-4">
-        <h1 className="mb-8 font-serif text-3xl font-bold animate-fade-up">Our Collection</h1>
+        <h1 className="mb-8 font-serif text-3xl font-bold">Our Collection</h1>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {products.map((product, index) => (
-            <div 
-              key={product.id} 
-              className="animate-fade-up"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
+          {products.map((product) => (
+            <div key={product.id} className="animate-fade-up">
               <ProductCard {...product} />
             </div>
           ))}
