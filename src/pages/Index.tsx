@@ -10,14 +10,14 @@ const featuredProducts = [
     title: "Traditional Luopan",
     price: 299.99,
     imageUrl: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
-    description: "Classic Feng Shui compass with traditional markings",
+    description: "Classic Feng Shui compass with traditional markings and wooden base",
   },
   {
     id: 2,
     title: "Professional Luopan",
     price: 499.99,
     imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
-    description: "High-precision instrument for professional practitioners",
+    description: "High-precision instrument for professional practitioners with extended rings",
   },
   {
     id: 3,
@@ -27,6 +27,48 @@ const featuredProducts = [
     description: "Personalized Feng Shui compass crafted to your specifications",
     isCustom: true,
   },
+  {
+    id: 4,
+    title: "Premium San He Luopan",
+    price: 899.99,
+    imageUrl: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    description: "Professional-grade San He Luopan with advanced markings and premium materials",
+  },
+  {
+    id: 5,
+    title: "San Yuan Luopan",
+    price: 699.99,
+    imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+    description: "Traditional San Yuan style compass for advanced practitioners",
+  },
+  {
+    id: 6,
+    title: "Beginner's Luopan",
+    price: 199.99,
+    imageUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
+    description: "Perfect starter Luopan for feng shui students with learning guide",
+  },
+  {
+    id: 7,
+    title: "Travel Luopan",
+    price: 249.99,
+    imageUrl: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+    description: "Compact and portable Luopan perfect for on-site consultations",
+  },
+  {
+    id: 8,
+    title: "Collector's Edition Luopan",
+    price: 1299.99,
+    imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+    description: "Limited edition Luopan with rare wood construction and gold inlays",
+  },
+  {
+    id: 9,
+    title: "Modern Luopan",
+    price: 399.99,
+    imageUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
+    description: "Contemporary design with traditional accuracy for modern practitioners",
+  }
 ];
 
 const Index = () => {
@@ -53,13 +95,15 @@ const Index = () => {
       {/* Featured Products Section */}
       <section className="py-16">
         <div className="container px-4">
-          <h2 className="mb-12 text-center font-serif text-3xl font-bold">Featured Collection</h2>
+          <h2 className="mb-12 text-center font-serif text-3xl font-bold animate-fade-up">
+            Featured Collection
+          </h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featuredProducts.map((product, index) => (
               <div
                 key={product.id}
                 className="animate-fade-up"
-                style={{ animationDelay: `${index * 200}ms` }}
+                style={{ animationDelay: `${index * 100}ms` }}
               >
                 <ProductCard {...product} />
               </div>
