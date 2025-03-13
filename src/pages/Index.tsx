@@ -2,8 +2,9 @@
 import { ProductCard } from "@/components/ProductCard";
 import { WarrantyBanner } from "@/components/WarrantyBanner";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
-const products = [
+const featuredProducts = [
   {
     id: 1,
     title: "Traditional Luopan",
@@ -34,29 +35,42 @@ const Index = () => {
       {/* Hero Section */}
       <section className="relative flex min-h-[80vh] items-center justify-center bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="container px-4 text-center">
-          <h1 className="font-serif text-4xl font-bold text-primary md:text-6xl">
+          <h1 className="animate-fade-up font-serif text-4xl font-bold text-primary md:text-6xl">
             Precision-Crafted Luopan
           </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-muted-foreground [animation-delay:200ms]">
             Discover our collection of meticulously crafted Feng Shui compasses,
             handmade by master artisans for perfect precision and balance.
           </p>
-          <Button className="mt-8 bg-primary px-8 py-6 text-lg hover:bg-primary/90">
-            Explore Collection
-          </Button>
+          <Link to="/shop">
+            <Button className="mt-8 animate-fade-up bg-primary px-8 py-6 text-lg hover:bg-primary/90 [animation-delay:400ms]">
+              Explore Collection
+            </Button>
+          </Link>
         </div>
       </section>
 
-      {/* Products Section */}
+      {/* Featured Products Section */}
       <section className="py-16">
         <div className="container px-4">
-          <h2 className="mb-12 text-center font-serif text-3xl font-bold">Our Collection</h2>
+          <h2 className="mb-12 text-center font-serif text-3xl font-bold">Featured Collection</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {products.map((product) => (
-              <div key={product.id} className="animate-fade-up">
+            {featuredProducts.map((product, index) => (
+              <div
+                key={product.id}
+                className="animate-fade-up"
+                style={{ animationDelay: `${index * 200}ms` }}
+              >
                 <ProductCard {...product} />
               </div>
             ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link to="/shop">
+              <Button variant="outline" size="lg">
+                View All Products
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -73,9 +87,11 @@ const Index = () => {
             your exact specifications. Each piece is carefully created by our master
             craftsmen.
           </p>
-          <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-            Start Custom Order
-          </Button>
+          <Link to="/custom">
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              Start Custom Order
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
