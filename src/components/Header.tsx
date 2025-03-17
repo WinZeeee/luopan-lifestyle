@@ -3,8 +3,13 @@ import { ShoppingCart, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const Header = () => {
+  const isMobile = useIsMobile();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-16 items-center justify-between">
@@ -12,30 +17,73 @@ export const Header = () => {
           Luopan Crafts
         </Link>
         
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link to="/shop" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                Shop
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/custom" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                Custom Orders
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link to="/about" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                About
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        {/* Desktop Navigation */}
+        <div className="hidden md:block">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link to="/shop" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  Shop
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/custom" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  Custom Orders
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/about" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  About
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
 
         <div className="flex items-center gap-4">
           <Button variant="ghost" size="icon">
             <ShoppingCart className="h-5 w-5" />
           </Button>
+          
+          {/* Mobile Menu */}
+          <div className="md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-5 w-5" />
+                  <span className="sr-only">Toggle menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[75vw] sm:w-[350px]">
+                <div className="mt-6 flex flex-col gap-4">
+                  <Link 
+                    to="/" 
+                    className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
+                  >
+                    Home
+                  </Link>
+                  <Link 
+                    to="/shop" 
+                    className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
+                  >
+                    Shop
+                  </Link>
+                  <Link 
+                    to="/custom" 
+                    className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
+                  >
+                    Custom Orders
+                  </Link>
+                  <Link 
+                    to="/about" 
+                    className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
+                  >
+                    About
+                  </Link>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
     </header>
