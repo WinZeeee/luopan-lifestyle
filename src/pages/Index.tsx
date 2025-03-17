@@ -3,6 +3,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { WarrantyBanner } from "@/components/WarrantyBanner";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { RollingText } from "@/components/RollingText";
 
 const featuredProducts = [
   {
@@ -78,7 +79,7 @@ const Index = () => {
       <section className="relative flex min-h-[80vh] items-center justify-center bg-gradient-to-r from-primary/10 to-secondary/10">
         <div className="container px-4 text-center">
           <h1 className="animate-fade-up font-serif text-4xl font-bold text-primary md:text-6xl">
-            Precision-Crafted Luopan
+            La Bàn Phong Thủy <RollingText words={["Tinh xảo", "Tỉ Mỉ", "Cao Cấp", "Chuẩn Xác"]} />
           </h1>
           <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-muted-foreground [animation-delay:200ms]">
             Discover our collection of meticulously crafted Feng Shui compasses,
