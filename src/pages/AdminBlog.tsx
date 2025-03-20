@@ -43,6 +43,7 @@ const AdminBlog = () => {
       content: "",
       author: "",
       imageUrl: "",
+      // Fix: Initialize tags as a string, not string[]
       tags: "",
     }
   });
@@ -56,7 +57,8 @@ const AdminBlog = () => {
         content: post.content,
         author: post.author,
         imageUrl: post.imageUrl,
-        tags: post.tags.join(", "),  // Convert array to comma-separated string
+        // Fix: Convert the tags array to a comma-separated string
+        tags: post.tags.join(", "),
       });
     } else {
       setCurrentPost(null);
@@ -66,6 +68,7 @@ const AdminBlog = () => {
         content: "",
         author: "",
         imageUrl: "",
+        // Fix: Initialize as an empty string, not empty array
         tags: "",
       });
     }
@@ -73,6 +76,7 @@ const AdminBlog = () => {
   };
 
   const onSubmit = (values: BlogFormValues) => {
+    // Now values.tags will be properly converted to a string[] by the Zod schema
     console.log("Saving post:", values);
     
     toast({
