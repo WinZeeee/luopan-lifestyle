@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPosts } from "@/api/blog";
@@ -55,7 +56,7 @@ const AdminBlog = () => {
         content: post.content,
         author: post.author,
         imageUrl: post.imageUrl,
-        tags: post.tags.join(", "),
+        tags: post.tags.join(", "),  // Convert array to comma-separated string
       });
     } else {
       setCurrentPost(null);

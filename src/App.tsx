@@ -8,6 +8,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import Index from "./pages/Index";
 import Shop from "./pages/Shop";
+import ProductDetail from "./pages/ProductDetail";
 import Custom from "./pages/Custom";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
@@ -16,6 +17,7 @@ import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminBlog from "./pages/AdminBlog";
+import AdminProducts from "./pages/AdminProducts";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AdminLayout from "./components/AdminLayout";
 
@@ -44,6 +46,15 @@ const App = () => (
                 <Header />
                 <main className="flex-1">
                   <Shop />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/shop/:id" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <ProductDetail />
                 </main>
                 <Footer />
               </>
@@ -91,6 +102,7 @@ const App = () => (
               <Route element={<AdminLayout />}>
                 <Route path="dashboard" element={<AdminDashboard />} />
                 <Route path="blog" element={<AdminBlog />} />
+                <Route path="products" element={<AdminProducts />} />
               </Route>
             </Route>
             

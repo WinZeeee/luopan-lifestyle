@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/use-toast";
-import { LayoutDashboard, BookOpen, LogOut } from "lucide-react";
+import { LayoutDashboard, BookOpen, LogOut, ShoppingBag } from "lucide-react";
 
 const AdminLayout = () => {
   const navigate = useNavigate();
@@ -41,9 +41,13 @@ const AdminLayout = () => {
               <LayoutDashboard className="h-4 w-4" />
               Dashboard
             </TabsTrigger>
+            <TabsTrigger value="products" className="gap-2">
+              <ShoppingBag className="h-4 w-4" />
+              Products
+            </TabsTrigger>
             <TabsTrigger value="blog" className="gap-2">
               <BookOpen className="h-4 w-4" />
-              Blog Management
+              Blog
             </TabsTrigger>
           </TabsList>
         </Tabs>
