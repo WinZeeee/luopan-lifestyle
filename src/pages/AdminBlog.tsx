@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPosts } from "@/api/blog";
@@ -23,7 +22,7 @@ const blogFormSchema = z.object({
   tags: z.string().transform((val) => val.split(",").map(tag => tag.trim())),
 });
 
-type BlogFormValues = z.infer<typeof blogFormSchema>;
+type BlogFormValues = Omit<z.infer<typeof blogFormSchema>, 'tags'> & { tags: string };
 
 const AdminBlog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,7 +42,6 @@ const AdminBlog = () => {
       content: "",
       author: "",
       imageUrl: "",
-      // Fix: Initialize tags as a string, not string[]
       tags: "",
     }
   });
@@ -57,7 +55,6 @@ const AdminBlog = () => {
         content: post.content,
         author: post.author,
         imageUrl: post.imageUrl,
-        // Fix: Convert the tags array to a comma-separated string
         tags: post.tags.join(", "),
       });
     } else {
@@ -68,7 +65,6 @@ const AdminBlog = () => {
         content: "",
         author: "",
         imageUrl: "",
-        // Fix: Initialize as an empty string, not empty array
         tags: "",
       });
     }
@@ -76,7 +72,6 @@ const AdminBlog = () => {
   };
 
   const onSubmit = (values: BlogFormValues) => {
-    // Now values.tags will be properly converted to a string[] by the Zod schema
     console.log("Saving post:", values);
     
     toast({
