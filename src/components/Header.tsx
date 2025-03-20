@@ -3,7 +3,6 @@ import { ShoppingCart, Menu } from "lucide-react";
 import { Button } from "./ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "./ui/navigation-menu";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -29,6 +28,11 @@ export const Header = () => {
               <NavigationMenuItem>
                 <Link to="/custom" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
                   Custom Orders
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link to="/blog" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
+                  Blog
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -73,6 +77,12 @@ export const Header = () => {
                     className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
                   >
                     Custom Orders
+                  </Link>
+                  <Link 
+                    to="/blog" 
+                    className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
+                  >
+                    Blog
                   </Link>
                   <Link 
                     to="/about" 

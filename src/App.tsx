@@ -10,6 +10,8 @@ import Index from "./pages/Index";
 import Shop from "./pages/Shop";
 import Custom from "./pages/Custom";
 import About from "./pages/About";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,8 @@ const App = () => (
               <Route path="/shop" element={<Shop />} />
               <Route path="/custom" element={<Custom />} />
               <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
