@@ -13,6 +13,11 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminBlog from "./pages/AdminBlog";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import AdminLayout from "./components/AdminLayout";
 
 const queryClient = new QueryClient();
 
@@ -23,19 +28,83 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <div className="flex min-h-screen flex-col">
-          <Header />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/custom" element={<Custom />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogPost />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </main>
-          <Footer />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <Index />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/shop" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <Shop />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/custom" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <Custom />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/about" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <About />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/blog" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <Blog />
+                </main>
+                <Footer />
+              </>
+            } />
+            <Route path="/blog/:id" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <BlogPost />
+                </main>
+                <Footer />
+              </>
+            } />
+            
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminProtectedRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="blog" element={<AdminBlog />} />
+              </Route>
+            </Route>
+            
+            {/* 404 Route */}
+            <Route path="*" element={
+              <>
+                <Header />
+                <main className="flex-1">
+                  <NotFound />
+                </main>
+                <Footer />
+              </>
+            } />
+          </Routes>
         </div>
       </BrowserRouter>
     </TooltipProvider>
