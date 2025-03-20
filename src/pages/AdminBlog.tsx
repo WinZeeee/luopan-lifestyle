@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getBlogPosts } from "@/api/blog";
@@ -73,7 +72,6 @@ const AdminBlog = () => {
   };
 
   const onSubmit = (values: BlogFormValues) => {
-    // In a real application, this would call an API to save the post
     console.log("Saving post:", values);
     
     toast({
@@ -87,7 +85,6 @@ const AdminBlog = () => {
   };
 
   const handleDeletePost = (post: BlogPost) => {
-    // In a real application, this would call an API to delete the post
     console.log("Deleting post:", post);
     
     toast({
