@@ -67,7 +67,7 @@ const AdminBlog = () => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number, data: Partial<Omit<BlogPost, 'id' | 'date'>> }) => 
+    mutationFn: ({ id, data }: { id: string, data: Partial<Omit<BlogPost, 'id' | 'date'>> }) => 
       updateBlogPost(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blogPosts'] });

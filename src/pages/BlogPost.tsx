@@ -8,12 +8,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
-  const postId = parseInt(id || "0");
-
+  
+  // Use the ID directly as a string without parsing it to integer
   const { data: post, isLoading, error } = useQuery({
-    queryKey: ['blogPost', postId],
-    queryFn: () => getBlogPostById(postId),
-    enabled: !!postId,
+    queryKey: ['blogPost', id],
+    queryFn: () => getBlogPostById(id || ""),
+    enabled: !!id,
   });
 
   if (error) {
