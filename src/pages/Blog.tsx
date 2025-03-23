@@ -1,7 +1,5 @@
 
-import { useEffect, useState } from "react";
 import { getBlogPosts } from "@/api/blog";
-import { BlogPost } from "@/types/blog";
 import { BlogCard } from "@/components/BlogCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
