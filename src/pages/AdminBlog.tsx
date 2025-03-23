@@ -1,7 +1,7 @@
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getBlogPosts } from "@/api/blog";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "@/api/blog";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { BlogPost } from "@/types/blog";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 
 // Define the form input values type first
 type BlogFormValues = {
@@ -36,12 +37,72 @@ const blogFormSchema = z.object({
 
 const AdminBlog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [currentPost, setCurrentPost] = useState<BlogPost | null>(null);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   
-  const { data: posts, isLoading, refetch } = useQuery({
+  const { data: posts, isLoading } = useQuery({
     queryKey: ['blogPosts'],
     queryFn: getBlogPosts
+  });
+
+  const createMutation = useMutation({
+    mutationFn: createBlogPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
+      toast({
+        title: "Post created",
+        description: "Your blog post has been successfully created.",
+      });
+      setIsDialogOpen(false);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to create blog post. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: number, data: Partial<Omit<BlogPost, 'id' | 'date'>> }) => 
+      updateBlogPost(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
+      toast({
+        title: "Post updated",
+        description: "Your blog post has been successfully updated.",
+      });
+      setIsDialogOpen(false);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to update blog post. Please try again.",
+        variant: "destructive",
+      });
+    }
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteBlogPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
+      toast({
+        title: "Post deleted",
+        description: "Your blog post has been successfully deleted.",
+      });
+      setIsDeleteDialogOpen(false);
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: "Failed to delete blog post. Please try again.",
+        variant: "destructive",
+      });
+    }
   });
 
   const form = useForm<BlogFormValues>({
@@ -82,28 +143,31 @@ const AdminBlog = () => {
   };
 
   const onSubmit = (values: BlogFormValues) => {
-    console.log("Saving post:", values);
+    const formData = {
+      title: values.title,
+      excerpt: values.excerpt,
+      content: values.content,
+      author: values.author,
+      imageUrl: values.imageUrl,
+      tags: form.getValues("tags").split(",").map(tag => tag.trim()),
+    };
     
-    toast({
-      title: currentPost ? "Post updated" : "Post created",
-      description: `Successfully ${currentPost ? "updated" : "created"} the blog post "${values.title}"`,
-    });
-    
-    setIsDialogOpen(false);
-    // In a real application, we would refetch the posts after saving
-    // refetch();
+    if (currentPost) {
+      updateMutation.mutate({ id: currentPost.id, data: formData });
+    } else {
+      createMutation.mutate(formData as any);
+    }
   };
 
   const handleDeletePost = (post: BlogPost) => {
-    console.log("Deleting post:", post);
-    
-    toast({
-      title: "Post deleted",
-      description: `Successfully deleted the blog post "${post.title}"`,
-    });
-    
-    // In a real application, we would refetch the posts after deletion
-    // refetch();
+    setCurrentPost(post);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (currentPost) {
+      deleteMutation.mutate(currentPost.id);
+    }
   };
 
   return (
@@ -141,10 +205,20 @@ const AdminBlog = () => {
                 </div>
               </div>
               <div className="flex space-x-2">
-                <Button variant="outline" size="sm" onClick={() => handleOpenDialog(post)}>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => handleOpenDialog(post)}
+                  disabled={updateMutation.isPending}
+                >
                   <Pencil className="h-4 w-4" />
                 </Button>
-                <Button variant="outline" size="sm" onClick={() => handleDeletePost(post)}>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => handleDeletePost(post)}
+                  disabled={deleteMutation.isPending}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </div>
@@ -251,7 +325,13 @@ const AdminBlog = () => {
               />
               
               <DialogFooter>
-                <Button type="submit">
+                <Button 
+                  type="submit" 
+                  disabled={createMutation.isPending || updateMutation.isPending}
+                >
+                  {(createMutation.isPending || updateMutation.isPending) && (
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  )}
                   {currentPost ? "Update Post" : "Create Post"}
                 </Button>
               </DialogFooter>
@@ -259,6 +339,30 @@ const AdminBlog = () => {
           </Form>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the blog post
+              "{currentPost?.title}".
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={confirmDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              {deleteMutation.isPending && (
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              )}
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
