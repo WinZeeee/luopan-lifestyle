@@ -7,6 +7,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -29,19 +31,18 @@ const AdminLogin = () => {
       
       if (error) throw error;
       
-      // Check if the user is an admin by looking up in the profiles table
+      // Check if the user is an admin by directly calling Supabase function
+      // This avoids the infinite recursion issue
       const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', data.user.id)
+        .rpc('is_admin')
         .single();
       
-      if (profileError || !profileData) {
-        await supabase.auth.signOut();
+      if (profileError) {
+        console.error("Admin check error:", profileError);
         throw new Error('Failed to verify admin privileges');
       }
       
-      if (!profileData.is_admin) {
+      if (!profileData) {
         await supabase.auth.signOut();
         throw new Error('Not authorized as admin');
       }
@@ -168,13 +169,12 @@ const AdminLogin = () => {
                     required
                   />
                 </div>
-                <div className="rounded-md bg-yellow-50 p-4">
-                  <div className="flex">
-                    <div className="text-sm text-yellow-700">
-                      <p>After signing up, you'll need to run SQL commands to give your account admin privileges.</p>
-                    </div>
-                  </div>
-                </div>
+                <Alert variant="default" className="bg-yellow-50 border-yellow-200">
+                  <AlertCircle className="h-4 w-4 text-yellow-600" />
+                  <AlertDescription className="text-yellow-700">
+                    After signing up, you'll need an admin to grant you admin privileges in the database.
+                  </AlertDescription>
+                </Alert>
               </CardContent>
               <CardFooter>
                 <Button type="submit" className="w-full" disabled={isLoading}>

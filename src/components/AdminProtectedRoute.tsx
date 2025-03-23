@@ -26,21 +26,26 @@ const AdminProtectedRoute = () => {
         return;
       }
       
-      // Verify that the user is still an admin
-      const { data: profileData, error: profileError } = await supabase
-        .from('profiles')
-        .select('is_admin')
-        .eq('id', data.session.user.id)
-        .single();
-      
-      if (profileError || !profileData || !profileData.is_admin) {
+      // Use the RPC function to check admin status safely
+      try {
+        const { data: isAdmin, error } = await supabase
+          .rpc('is_admin')
+          .single();
+        
+        if (error || !isAdmin) {
+          localStorage.removeItem("adminAuthenticated");
+          await supabase.auth.signOut();
+          setIsAuthenticated(false);
+          return;
+        }
+        
+        setIsAuthenticated(true);
+      } catch (error) {
+        console.error("Admin verification error:", error);
         localStorage.removeItem("adminAuthenticated");
         await supabase.auth.signOut();
         setIsAuthenticated(false);
-        return;
       }
-      
-      setIsAuthenticated(true);
     };
     
     checkAdminAuth();
