@@ -1,9 +1,10 @@
+
 import { BlogPost } from "@/types/blog";
 import { supabase } from "@/integrations/supabase/client";
 
 // Convert Supabase row to BlogPost
 const toBlogPost = (row: any): BlogPost => ({
-  id: parseInt(row.id),
+  id: row.id,
   title: row.title,
   excerpt: row.excerpt,
   content: row.content,
@@ -31,15 +32,15 @@ export const getBlogPosts = async (): Promise<BlogPost[]> => {
 };
 
 // Get a single blog post by ID
-export const getBlogPostById = async (id: number): Promise<BlogPost | undefined> => {
+export const getBlogPostById = async (id: string): Promise<BlogPost | undefined> => {
   try {
     const { data, error } = await supabase
       .from('blog_posts')
       .select('*')
-      .eq('id', id.toString())
-      .single();
+      .eq('id', id)
+      .maybeSingle();
     
-    if (error) return undefined;
+    if (error || !data) return undefined;
     
     return toBlogPost(data);
   } catch (error) {
@@ -79,7 +80,7 @@ export const createBlogPost = async (post: Omit<BlogPost, 'id' | 'date'>): Promi
 };
 
 // Update an existing blog post
-export const updateBlogPost = async (id: number, updates: Partial<Omit<BlogPost, 'id' | 'date'>>): Promise<BlogPost | undefined> => {
+export const updateBlogPost = async (id: string, updates: Partial<Omit<BlogPost, 'id' | 'date'>>): Promise<BlogPost | undefined> => {
   try {
     // Convert frontend fields to database column names
     const blogPostRow: any = {};
@@ -93,7 +94,7 @@ export const updateBlogPost = async (id: number, updates: Partial<Omit<BlogPost,
     const { data, error } = await supabase
       .from('blog_posts')
       .update(blogPostRow)
-      .eq('id', id.toString())
+      .eq('id', id)
       .select()
       .single();
     
@@ -110,12 +111,12 @@ export const updateBlogPost = async (id: number, updates: Partial<Omit<BlogPost,
 };
 
 // Delete a blog post
-export const deleteBlogPost = async (id: number): Promise<boolean> => {
+export const deleteBlogPost = async (id: string): Promise<boolean> => {
   try {
     const { error } = await supabase
       .from('blog_posts')
       .delete()
-      .eq('id', id.toString());
+      .eq('id', id);
     
     if (error) {
       console.error('Error deleting blog post:', error);
@@ -140,7 +141,7 @@ export const api = {
     }
     
     if (url.startsWith('/api/blog/')) {
-      const id = parseInt(url.split('/').pop() || '0');
+      const id = url.split('/').pop() || '';
       const post = await getBlogPostById(id);
       return post as unknown as T;
     }
@@ -163,7 +164,7 @@ export const api = {
     console.log(`[API] PUT request to ${url}`, data);
     
     if (url.startsWith('/api/blog/')) {
-      const id = parseInt(url.split('/').pop() || '0');
+      const id = url.split('/').pop() || '';
       const updatedPost = await updateBlogPost(id, data);
       return updatedPost as unknown as T;
     }
@@ -175,7 +176,7 @@ export const api = {
     console.log(`[API] DELETE request to ${url}`);
     
     if (url.startsWith('/api/blog/')) {
-      const id = parseInt(url.split('/').pop() || '0');
+      const id = url.split('/').pop() || '';
       const success = await deleteBlogPost(id);
       return { success } as unknown as T;
     }
