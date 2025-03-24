@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Loader2, Pencil, Plus, Trash2, DollarSign, Package, Tag } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
@@ -29,6 +30,7 @@ type ProductFormValues = z.infer<typeof productFormSchema>;
 const AdminProducts = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
   
   const { data: products, isLoading, refetch } = useQuery({
@@ -78,6 +80,9 @@ const AdminProducts = () => {
 
   const onSubmit = async (values: ProductFormValues) => {
     try {
+      setIsSubmitting(true);
+      console.log("Form values:", values);
+      
       const productData = {
         name: values.name,
         description: values.description,
@@ -87,6 +92,8 @@ const AdminProducts = () => {
         featured: values.featured,
         stock: Number(values.stock),
       };
+      
+      console.log("Processed product data:", productData);
       
       if (currentProduct) {
         // Update existing product
@@ -107,11 +114,14 @@ const AdminProducts = () => {
       setIsDialogOpen(false);
       refetch();
     } catch (error) {
+      console.error("Product save error:", error);
       toast({
         title: "Error",
         description: "Failed to save product. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -291,9 +301,37 @@ const AdminProducts = () => {
                 />
               </div>
               
+              <FormField
+                control={form.control}
+                name="featured"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel>Featured Product</FormLabel>
+                      <p className="text-sm text-muted-foreground">
+                        This product will be displayed in featured sections
+                      </p>
+                    </div>
+                  </FormItem>
+                )}
+              />
+              
               <DialogFooter>
-                <Button type="submit">
-                  {currentProduct ? "Update Product" : "Create Product"}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {currentProduct ? "Updating..." : "Creating..."}
+                    </>
+                  ) : (
+                    currentProduct ? "Update Product" : "Create Product"
+                  )}
                 </Button>
               </DialogFooter>
             </form>

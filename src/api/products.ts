@@ -49,13 +49,22 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
       stock: product.stock,
     };
     
+    console.log("Creating product with data:", productRow);
+    
     const { data, error } = await supabase
       .from('products')
       .insert(productRow)
       .select()
       .single();
     
-    if (error) throw error;
+    if (error) {
+      console.error('Supabase error creating product:', error);
+      throw error;
+    }
+    
+    if (!data) {
+      throw new Error('No data returned from product creation');
+    }
     
     return toProduct(data);
   } catch (error) {
@@ -71,11 +80,11 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
     const productRow: any = {};
     if (updates.name) productRow.name = updates.name;
     if (updates.description) productRow.description = updates.description;
-    if (updates.price) productRow.price = updates.price;
+    if (updates.price !== undefined) productRow.price = updates.price;
     if (updates.imageUrl) productRow.image_url = updates.imageUrl;
     if (updates.category) productRow.category = updates.category;
-    if ('featured' in updates) productRow.featured = updates.featured;
-    if ('stock' in updates) productRow.stock = updates.stock;
+    if (updates.featured !== undefined) productRow.featured = updates.featured;
+    if (updates.stock !== undefined) productRow.stock = updates.stock;
     
     const { data, error } = await supabase
       .from('products')
