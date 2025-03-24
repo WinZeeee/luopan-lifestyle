@@ -23,104 +23,106 @@ import AdminLayout from "./components/AdminLayout";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <div className="flex min-h-screen flex-col">
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <Index />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/shop" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <Shop />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/shop/:id" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <ProductDetail />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/custom" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <Custom />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/about" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <About />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/blog" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <Blog />
-                </main>
-                <Footer />
-              </>
-            } />
-            <Route path="/blog/:id" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <BlogPost />
-                </main>
-                <Footer />
-              </>
-            } />
-            
-            {/* Admin Routes */}
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminProtectedRoute />}>
-              <Route element={<AdminLayout />}>
-                <Route path="dashboard" element={<AdminDashboard />} />
-                <Route path="blog" element={<AdminBlog />} />
-                <Route path="products" element={<AdminProducts />} />
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <div className="flex min-h-screen flex-col">
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <Index />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/shop" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <Shop />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/shop/:id" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <ProductDetail />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/custom" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <Custom />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/about" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <About />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/blog" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <Blog />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              <Route path="/blog/:id" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <BlogPost />
+                  </main>
+                  <Footer />
+                </>
+              } />
+              
+              {/* Admin Routes */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminProtectedRoute />}>
+                <Route element={<AdminLayout />}>
+                  <Route path="dashboard" element={<AdminDashboard />} />
+                  <Route path="blog" element={<AdminBlog />} />
+                  <Route path="products" element={<AdminProducts />} />
+                </Route>
               </Route>
-            </Route>
-            
-            {/* 404 Route */}
-            <Route path="*" element={
-              <>
-                <Header />
-                <main className="flex-1">
-                  <NotFound />
-                </main>
-                <Footer />
-              </>
-            } />
-          </Routes>
-        </div>
+              
+              {/* 404 Route */}
+              <Route path="*" element={
+                <>
+                  <Header />
+                  <main className="flex-1">
+                    <NotFound />
+                  </main>
+                  <Footer />
+                </>
+              } />
+            </Routes>
+          </div>
+        </TooltipProvider>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+    </QueryClientProvider>
+  );
+};
 
 export default App;
