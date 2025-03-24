@@ -113,9 +113,62 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      create_product: {
+        Args: {
+          name: string
+          description: string
+          price: number
+          image_url: string
+          category: string
+          featured: boolean
+          stock: number
+        }
+        Returns: {
+          category: string
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          image_url: string
+          name: string
+          price: number
+          stock: number
+          updated_at: string
+        }
+      }
+      delete_product: {
+        Args: {
+          id: string
+        }
+        Returns: boolean
+      }
       is_admin: {
         Args: Record<PropertyKey, never>
         Returns: boolean
+      }
+      update_product: {
+        Args: {
+          id: string
+          name?: string
+          description?: string
+          price?: number
+          image_url?: string
+          category?: string
+          featured?: boolean
+          stock?: number
+        }
+        Returns: {
+          category: string
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          image_url: string
+          name: string
+          price: number
+          stock: number
+          updated_at: string
+        }
       }
     }
     Enums: {
