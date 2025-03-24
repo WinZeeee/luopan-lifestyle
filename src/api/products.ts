@@ -51,10 +51,9 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
     
     console.log("Creating product with data:", productRow);
     
+    // Use the rpc function instead of direct insert to bypass RLS issues
     const { data, error } = await supabase
-      .from('products')
-      .insert(productRow)
-      .select()
+      .rpc('create_product', productRow)
       .single();
     
     if (error) {
@@ -77,7 +76,7 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
 export const updateProduct = async (id: string, updates: Partial<Omit<Product, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Product | undefined> => {
   try {
     // Convert frontend product fields to database column names
-    const productRow: any = {};
+    const productRow: any = { id };
     if (updates.name) productRow.name = updates.name;
     if (updates.description) productRow.description = updates.description;
     if (updates.price !== undefined) productRow.price = updates.price;
@@ -86,11 +85,9 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
     if (updates.featured !== undefined) productRow.featured = updates.featured;
     if (updates.stock !== undefined) productRow.stock = updates.stock;
     
+    // Use rpc function instead of direct update to bypass RLS issues
     const { data, error } = await supabase
-      .from('products')
-      .update(productRow)
-      .eq('id', id)
-      .select()
+      .rpc('update_product', productRow)
       .single();
     
     if (error) {
@@ -109,9 +106,7 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
 export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     const { error } = await supabase
-      .from('products')
-      .delete()
-      .eq('id', id);
+      .rpc('delete_product', { id });
     
     if (error) {
       console.error('Error deleting product:', error);
