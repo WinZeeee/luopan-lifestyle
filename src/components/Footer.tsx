@@ -31,11 +31,16 @@ export const Footer = () => {
           </div>
         </div>
         
-        <div className="h-64 overflow-hidden rounded-lg bg-muted">
-          {/* Google Maps iframe would go here */}
-          <div className="h-full w-full bg-muted text-center text-sm text-muted-foreground">
-            Bản Đồ Google
-          </div>
+        <div className="h-64 overflow-hidden rounded-lg">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.9541599223823!2d106.60431307595505!3d10.740987089407332!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752dcdd60efd3d%3A0x8d6b2d79522c7e74!2zVsSpbmggTOG7mWMgQiwgQsOsbmggQ2jDoW5oLCBUaMOgbmggcGjhu5EgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1715592354022!5m2!1svi!2s"
+            className="h-full w-full border-0"
+            allowFullScreen={false}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Luopan Crafts Store Location"
+            aria-label="Google Maps showing Luopan Crafts store location in Vĩnh Lộc B"
+          />
         </div>
       </div>
       
