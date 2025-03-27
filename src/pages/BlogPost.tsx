@@ -19,12 +19,12 @@ const BlogPost = () => {
   if (error) {
     return (
       <div className="container py-16 text-center">
-        <h1 className="text-2xl font-bold text-destructive">Error loading blog post</h1>
-        <p className="mt-4 text-muted-foreground">Please try again later.</p>
+        <h1 className="text-2xl font-bold text-destructive">Lỗi khi tải bài viết</h1>
+        <p className="mt-4 text-muted-foreground">Vui lòng thử lại sau.</p>
         <Link to="/blog">
           <Button variant="outline" className="mt-8">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
+            Quay Lại Blog
           </Button>
         </Link>
       </div>
@@ -55,12 +55,12 @@ const BlogPost = () => {
   if (!post) {
     return (
       <div className="container py-16 text-center">
-        <h1 className="text-2xl font-bold">Blog post not found</h1>
-        <p className="mt-4 text-muted-foreground">The blog post you're looking for doesn't exist.</p>
+        <h1 className="text-2xl font-bold">Không tìm thấy bài viết</h1>
+        <p className="mt-4 text-muted-foreground">Bài viết bạn đang tìm kiếm không tồn tại.</p>
         <Link to="/blog">
           <Button variant="outline" className="mt-8">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
+            Quay Lại Blog
           </Button>
         </Link>
       </div>
@@ -73,7 +73,7 @@ const BlogPost = () => {
         <Link to="/blog">
           <Button variant="ghost" className="mb-8">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Blog
+            Quay Lại Blog
           </Button>
         </Link>
         
@@ -104,7 +104,7 @@ const BlogPost = () => {
         />
         
         <div className="mt-12">
-          <h3 className="mb-4 text-lg font-semibold">Tags</h3>
+          <h3 className="mb-4 text-lg font-semibold">Thẻ</h3>
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => (
               <div 

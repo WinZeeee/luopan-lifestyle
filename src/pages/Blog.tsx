@@ -13,8 +13,8 @@ const Blog = () => {
   if (error) {
     return (
       <div className="container py-16 text-center">
-        <h1 className="text-2xl font-bold text-destructive">Error loading blog posts</h1>
-        <p className="mt-4 text-muted-foreground">Please try again later.</p>
+        <h1 className="text-2xl font-bold text-destructive">Lỗi khi tải bài viết</h1>
+        <p className="mt-4 text-muted-foreground">Vui lòng thử lại sau.</p>
       </div>
     );
   }
@@ -22,10 +22,10 @@ const Blog = () => {
   return (
     <div className="min-h-screen py-12">
       <div className="container px-4">
-        <h1 className="mb-8 text-center font-serif text-4xl font-bold">Luopan Crafts Blog</h1>
+        <h1 className="mb-8 text-center font-serif text-4xl font-bold">Blog Luopan Crafts</h1>
         <p className="mx-auto mb-12 max-w-2xl text-center text-muted-foreground">
-          Discover insights into Feng Shui practices, Luopan craftsmanship, and traditional wisdom
-          for creating harmony in your space.
+          Khám phá những hiểu biết về phong thủy, nghề thủ công la bàn và trí tuệ truyền thống
+          để tạo ra sự hài hòa trong không gian của bạn.
         </p>
 
         {isLoading ? (

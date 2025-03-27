@@ -6,38 +6,38 @@ const Custom = () => {
     <div className="min-h-screen animate-fade-in py-16">
       <div className="container px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <h1 className="font-serif text-4xl font-bold text-primary">Custom Luopan Orders</h1>
+          <h1 className="font-serif text-4xl font-bold text-primary">Đặt Hàng La Bàn Theo Yêu Cầu</h1>
           <p className="mt-6 text-lg text-muted-foreground">
-            Our master craftsmen can create a unique Luopan tailored to your specific needs and preferences.
-            Each custom piece is meticulously crafted using traditional techniques and premium materials.
+            Những nghệ nhân bậc thầy của chúng tôi có thể tạo ra một chiếc la bàn độc đáo phù hợp với nhu cầu và sở thích cụ thể của bạn.
+            Mỗi sản phẩm đặc biệt đều được chế tác tỉ mỉ bằng kỹ thuật truyền thống và vật liệu cao cấp.
           </p>
           <Button className="mt-8 bg-primary px-8 py-6 text-lg hover:bg-primary/90">
-            Start Your Custom Order
+            Bắt Đầu Đặt Hàng Theo Yêu Cầu
           </Button>
         </div>
 
         <div className="mt-16 grid gap-8 md:grid-cols-2">
           <div className="rounded-lg bg-accent/10 p-8">
-            <h2 className="font-serif text-2xl font-semibold">The Process</h2>
+            <h2 className="font-serif text-2xl font-semibold">Quy Trình</h2>
             <ul className="mt-4 space-y-4 text-muted-foreground">
-              <li>1. Initial Consultation</li>
-              <li>2. Design Approval</li>
-              <li>3. Material Selection</li>
-              <li>4. Crafting Process</li>
-              <li>5. Quality Assurance</li>
-              <li>6. Final Delivery</li>
+              <li>1. Tư Vấn Ban Đầu</li>
+              <li>2. Phê Duyệt Thiết Kế</li>
+              <li>3. Lựa Chọn Vật Liệu</li>
+              <li>4. Quá Trình Chế Tác</li>
+              <li>5. Đảm Bảo Chất Lượng</li>
+              <li>6. Giao Hàng Cuối Cùng</li>
             </ul>
           </div>
           
           <div className="rounded-lg bg-secondary/10 p-8">
-            <h2 className="font-serif text-2xl font-semibold">Customization Options</h2>
+            <h2 className="font-serif text-2xl font-semibold">Tùy Chọn Tùy Chỉnh</h2>
             <ul className="mt-4 space-y-4 text-muted-foreground">
-              <li>• Size and Dimensions</li>
-              <li>• Material Selection</li>
-              <li>• Ring Configurations</li>
-              <li>• Special Markings</li>
-              <li>• Handle Design</li>
-              <li>• Protective Case</li>
+              <li>• Kích Thước và Kích Cỡ</li>
+              <li>• Lựa Chọn Vật Liệu</li>
+              <li>• Cấu Hình Vòng</li>
+              <li>• Đánh Dấu Đặc Biệt</li>
+              <li>• Thiết Kế Tay Cầm</li>
+              <li>• Hộp Bảo Vệ</li>
             </ul>
           </div>
         </div>

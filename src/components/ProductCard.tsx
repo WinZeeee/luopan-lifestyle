@@ -36,7 +36,7 @@ export const ProductCard = ({ title, price, imageUrl, description, isCustom = fa
           />
           {isCustom && (
             <Badge className="absolute right-2 top-2 bg-secondary text-secondary-foreground">
-              Custom Made
+              Đặt Riêng
             </Badge>
           )}
         </div>
@@ -52,7 +52,7 @@ export const ProductCard = ({ title, price, imageUrl, description, isCustom = fa
           onClick={handleAddToCart}
           disabled={!product}
         >
-          Add to Cart
+          Thêm Vào Giỏ Hàng
         </Button>
       </CardFooter>
     </Card>

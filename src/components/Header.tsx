@@ -25,12 +25,12 @@ export const Header = () => {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link to="/shop" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                  Shop
+                  Cửa Hàng
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link to="/custom" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                  Custom Orders
+                  Đặt Hàng Theo Yêu Cầu
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
@@ -40,7 +40,7 @@ export const Header = () => {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link to="/about" className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50">
-                  About
+                  Giới Thiệu
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
@@ -63,7 +63,7 @@ export const Header = () => {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle menu</span>
+                  <span className="sr-only">Mở menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[75vw] sm:w-[350px]">
@@ -72,19 +72,19 @@ export const Header = () => {
                     to="/" 
                     className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
                   >
-                    Home
+                    Trang Chủ
                   </Link>
                   <Link 
                     to="/shop" 
                     className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
                   >
-                    Shop
+                    Cửa Hàng
                   </Link>
                   <Link 
                     to="/custom" 
                     className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
                   >
-                    Custom Orders
+                    Đặt Hàng Theo Yêu Cầu
                   </Link>
                   <Link 
                     to="/blog" 
@@ -96,7 +96,7 @@ export const Header = () => {
                     to="/about" 
                     className="flex items-center gap-2 px-2 py-2 text-lg font-medium hover:bg-accent rounded-md"
                   >
-                    About
+                    Giới Thiệu
                   </Link>
                 </div>
               </SheetContent>

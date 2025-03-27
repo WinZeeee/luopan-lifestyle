@@ -26,12 +26,12 @@ const Index = () => {
             La Bàn Phong Thủy <RollingText words={["Tinh xảo", "Tỉ Mỉ", "Cao Cấp", "Chuẩn Xác"]} />
           </h1>
           <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-muted-foreground [animation-delay:200ms]">
-            Discover our collection of meticulously crafted Feng Shui compasses,
-            handmade by master artisans for perfect precision and balance.
+            Khám phá bộ sưu tập la bàn phong thủy được chế tác tỉ mỉ, 
+            làm thủ công bởi các nghệ nhân bậc thầy để đạt độ chính xác và cân bằng hoàn hảo.
           </p>
           <Link to="/shop">
             <Button className="mt-8 animate-fade-up bg-primary px-8 py-6 text-lg hover:bg-primary/90 [animation-delay:400ms]">
-              Explore Collection
+              Khám Phá Bộ Sưu Tập
             </Button>
           </Link>
         </div>
@@ -41,7 +41,7 @@ const Index = () => {
       <section className="py-16">
         <div className="container px-4">
           <h2 className="mb-12 text-center font-serif text-3xl font-bold animate-fade-up">
-            Featured Collection
+            Sản Phẩm Nổi Bật
           </h2>
           
           {isLoading ? (
@@ -73,7 +73,7 @@ const Index = () => {
           <div className="mt-12 text-center">
             <Link to="/shop">
               <Button variant="outline" size="lg">
-                View All Products
+                Xem Tất Cả Sản Phẩm
               </Button>
             </Link>
           </div>
@@ -86,15 +86,15 @@ const Index = () => {
       {/* Custom Orders Section */}
       <section className="bg-secondary/5 py-16">
         <div className="container px-4 text-center">
-          <h2 className="mb-6 font-serif text-3xl font-bold">Custom Luopan Orders</h2>
+          <h2 className="mb-6 font-serif text-3xl font-bold">Đặt Hàng La Bàn Theo Yêu Cầu</h2>
           <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-            Looking for a unique Luopan? We offer custom-made instruments crafted to
-            your exact specifications. Each piece is carefully created by our master
-            craftsmen.
+            Bạn đang tìm kiếm một chiếc la bàn độc đáo? Chúng tôi cung cấp dịch vụ làm la bàn 
+            theo đúng thông số kỹ thuật của bạn. Mỗi sản phẩm đều được chế tác cẩn thận bởi 
+            các nghệ nhân bậc thầy của chúng tôi.
           </p>
           <Link to="/custom">
             <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
-              Start Custom Order
+              Bắt Đầu Đặt Hàng Theo Yêu Cầu
             </Button>
           </Link>
         </div>

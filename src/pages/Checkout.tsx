@@ -17,9 +17,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 // Form validation schema
 const checkoutSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  phone: z.string().min(5, "Phone number must be at least 5 characters"),
+  name: z.string().min(2, "Tên phải có ít nhất 2 ký tự"),
+  email: z.string().email("Địa chỉ email không hợp lệ"),
+  phone: z.string().min(5, "Số điện thoại phải có ít nhất 5 ký tự"),
   notes: z.string().optional(),
 });
 
@@ -43,7 +43,7 @@ const Checkout = () => {
   // Submit order handler
   const onSubmit = async (data: CheckoutFormValues) => {
     if (state.items.length === 0) {
-      toast.error("Your cart is empty");
+      toast.error("Giỏ hàng của bạn đang trống");
       return;
     }
 
@@ -71,14 +71,14 @@ const Checkout = () => {
       if (order) {
         // Clear the cart and redirect to success page
         clearCart();
-        toast.success("Your order has been placed. We'll contact you soon!");
+        toast.success("Đơn hàng của bạn đã được đặt. Chúng tôi sẽ liên hệ với bạn sớm!");
         navigate("/order-confirmation", { state: { order } });
       } else {
-        toast.error("Failed to place order. Please try again.");
+        toast.error("Không thể đặt hàng. Vui lòng thử lại.");
       }
     } catch (error) {
       console.error("Error submitting order:", error);
-      toast.error("An error occurred while placing your order.");
+      toast.error("Đã xảy ra lỗi khi đặt hàng.");
     } finally {
       setIsSubmitting(false);
     }
@@ -92,12 +92,12 @@ const Checkout = () => {
           <div className="rounded-full bg-primary/10 p-3 text-primary w-12 h-12 mx-auto mb-4 flex items-center justify-center">
             <ShoppingBag className="h-6 w-6" />
           </div>
-          <h1 className="text-2xl font-semibold mb-2">Your cart is empty</h1>
+          <h1 className="text-2xl font-semibold mb-2">Giỏ hàng của bạn đang trống</h1>
           <p className="text-muted-foreground mb-6">
-            Add some items to your cart before checking out.
+            Hãy thêm một số sản phẩm vào giỏ hàng trước khi thanh toán.
           </p>
           <Button onClick={() => navigate("/shop")}>
-            Continue Shopping
+            Tiếp Tục Mua Sắm
           </Button>
         </div>
       </div>
@@ -106,14 +106,14 @@ const Checkout = () => {
 
   return (
     <div className="container py-16">
-      <h1 className="mb-8 text-3xl font-bold">Checkout</h1>
+      <h1 className="mb-8 text-3xl font-bold">Thanh Toán</h1>
       
       <div className="grid gap-8 lg:grid-cols-3">
         {/* Order Summary */}
         <div className="lg:col-span-1 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>Tóm Tắt Đơn Hàng</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               {state.items.map((item) => (
@@ -147,12 +147,12 @@ const Checkout = () => {
               <Separator />
               
               <div className="flex justify-between font-medium">
-                <span>Subtotal</span>
+                <span>Tạm Tính</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
               
               <div className="flex justify-between text-lg font-bold">
-                <span>Total</span>
+                <span>Tổng</span>
                 <span>${subtotal.toFixed(2)}</span>
               </div>
             </CardContent>
@@ -163,7 +163,7 @@ const Checkout = () => {
             className="w-full"
             onClick={() => navigate("/shop")}
           >
-            Return to Shop
+            Quay Lại Cửa Hàng
           </Button>
         </div>
         
@@ -171,7 +171,7 @@ const Checkout = () => {
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
+              <CardTitle>Thông Tin Liên Hệ</CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -181,9 +181,9 @@ const Checkout = () => {
                     name="name"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Full Name</FormLabel>
+                        <FormLabel>Họ Tên</FormLabel>
                         <FormControl>
-                          <Input placeholder="Your name" {...field} />
+                          <Input placeholder="Tên của bạn" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -195,9 +195,9 @@ const Checkout = () => {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Email Address</FormLabel>
+                        <FormLabel>Địa Chỉ Email</FormLabel>
                         <FormControl>
-                          <Input type="email" placeholder="your.email@example.com" {...field} />
+                          <Input type="email" placeholder="email.cua.ban@example.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -209,9 +209,9 @@ const Checkout = () => {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Phone Number</FormLabel>
+                        <FormLabel>Số Điện Thoại</FormLabel>
                         <FormControl>
-                          <Input type="tel" placeholder="Your phone number" {...field} />
+                          <Input type="tel" placeholder="Số điện thoại của bạn" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -223,10 +223,10 @@ const Checkout = () => {
                     name="notes"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Order Notes (Optional)</FormLabel>
+                        <FormLabel>Ghi Chú Đơn Hàng (Tùy Chọn)</FormLabel>
                         <FormControl>
                           <Textarea 
-                            placeholder="Any specific requests or information about your order"
+                            placeholder="Yêu cầu cụ thể hoặc thông tin về đơn hàng của bạn"
                             className="min-h-[100px]"
                             {...field}
                           />
@@ -241,7 +241,7 @@ const Checkout = () => {
                     className="w-full"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Processing..." : "Place Order"}
+                    {isSubmitting ? "Đang Xử Lý..." : "Đặt Hàng"}
                   </Button>
                 </form>
               </Form>

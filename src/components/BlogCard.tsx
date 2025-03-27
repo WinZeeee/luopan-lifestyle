@@ -43,7 +43,7 @@ export const BlogCard = ({ post }: BlogCardProps) => {
       <CardFooter>
         <Link to={`/blog/${post.id}`} className="w-full">
           <Button variant="outline" className="w-full">
-            Read More
+            Đọc Thêm
           </Button>
         </Link>
       </CardFooter>

@@ -9,15 +9,15 @@ export const WarrantyBanner = () => {
           <div className="flex items-center gap-4">
             <Shield className="h-12 w-12" />
             <div>
-              <h3 className="font-serif text-xl font-semibold">100% Warranty Guarantee</h3>
-              <p className="mt-1 text-sm">Full refund for any manufacturing defects</p>
+              <h3 className="font-serif text-xl font-semibold">Bảo Hành 100%</h3>
+              <p className="mt-1 text-sm">Hoàn tiền đầy đủ cho bất kỳ lỗi sản xuất nào</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <RefreshCw className="h-12 w-12" />
             <div>
-              <h3 className="font-serif text-xl font-semibold">Professional Repair Service</h3>
-              <p className="mt-1 text-sm">Expert maintenance and repair available</p>
+              <h3 className="font-serif text-xl font-semibold">Dịch Vụ Sửa Chữa Chuyên Nghiệp</h3>
+              <p className="mt-1 text-sm">Bảo trì và sửa chữa chuyên nghiệp luôn sẵn sàng</p>
             </div>
           </div>
         </div>

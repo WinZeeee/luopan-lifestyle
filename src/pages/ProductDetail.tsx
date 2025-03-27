@@ -32,13 +32,13 @@ const ProductDetail = () => {
   if (error || !product) {
     return (
       <div className="container mt-12 px-4 text-center">
-        <h1 className="text-2xl font-bold">Product Not Found</h1>
+        <h1 className="text-2xl font-bold">Không Tìm Thấy Sản Phẩm</h1>
         <p className="mt-4 text-muted-foreground">
-          The product you're looking for doesn't exist or has been removed.
+          Sản phẩm bạn đang tìm kiếm không tồn tại hoặc đã bị xóa.
         </p>
         <Button onClick={() => navigate('/shop')} className="mt-6 gap-2">
           <ArrowLeft className="h-4 w-4" />
-          Back to Shop
+          Quay Lại Cửa Hàng
         </Button>
       </div>
     );
@@ -56,7 +56,7 @@ const ProductDetail = () => {
         className="mb-6 gap-2"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to Shop
+        Quay Lại Cửa Hàng
       </Button>
       
       <div className="grid gap-8 md:grid-cols-2">
@@ -80,7 +80,7 @@ const ProductDetail = () => {
             </Badge>
             {product.featured && (
               <Badge className="bg-primary text-primary-foreground">
-                Featured
+                Nổi Bật
               </Badge>
             )}
           </div>
@@ -88,7 +88,7 @@ const ProductDetail = () => {
           <Separator />
           
           <div>
-            <h2 className="mb-2 font-medium">Description</h2>
+            <h2 className="mb-2 font-medium">Mô Tả</h2>
             <p className="text-muted-foreground">
               {product.description}
             </p>
@@ -98,8 +98,8 @@ const ProductDetail = () => {
             <Package className="h-4 w-4" />
             <span>
               {product.stock > 0 
-                ? `${product.stock} in stock` 
-                : "Out of stock"}
+                ? `Còn ${product.stock} sản phẩm` 
+                : "Hết hàng"}
             </span>
           </div>
           
@@ -110,7 +110,7 @@ const ProductDetail = () => {
               disabled={product.stock <= 0}
             >
               <ShoppingCart className="h-4 w-4" />
-              Add to Cart
+              Thêm Vào Giỏ Hàng
             </Button>
           </div>
         </div>
