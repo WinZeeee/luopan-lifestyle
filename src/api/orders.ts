@@ -23,6 +23,7 @@ export const createOrder = async (
       notes,
     };
 
+    // Need to use the generic version since TypeScript doesn't know about our orders table yet
     const { data, error } = await supabase
       .from('orders')
       .insert(orderData)
@@ -44,6 +45,7 @@ export const createOrder = async (
 // Get all orders (for admin)
 export const getOrders = async (): Promise<Order[]> => {
   try {
+    // Need to use the generic version since TypeScript doesn't know about our orders table yet
     const { data, error } = await supabase
       .from('orders')
       .select('*')
@@ -64,6 +66,7 @@ export const getOrders = async (): Promise<Order[]> => {
 // Get order by ID
 export const getOrderById = async (id: string): Promise<Order | null> => {
   try {
+    // Need to use the generic version since TypeScript doesn't know about our orders table yet
     const { data, error } = await supabase
       .from('orders')
       .select('*')
@@ -94,6 +97,7 @@ export const updateOrderStatus = async (
       updates.notes = notes;
     }
 
+    // Need to use the generic version since TypeScript doesn't know about our orders table yet
     const { error } = await supabase
       .from('orders')
       .update(updates)
