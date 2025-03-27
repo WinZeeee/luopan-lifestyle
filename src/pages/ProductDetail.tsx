@@ -8,10 +8,12 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Package, ShoppingCart } from "lucide-react";
 import { Loader2 } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { addItem } = useCart();
   
   const { data: product, isLoading, error } = useQuery({
     queryKey: ['product', id],
@@ -41,6 +43,10 @@ const ProductDetail = () => {
       </div>
     );
   }
+
+  const handleAddToCart = () => {
+    addItem(product);
+  };
 
   return (
     <div className="container py-12">
@@ -98,7 +104,11 @@ const ProductDetail = () => {
           </div>
           
           <div className="pt-4">
-            <Button className="w-full gap-2">
+            <Button 
+              onClick={handleAddToCart} 
+              className="w-full gap-2"
+              disabled={product.stock <= 0}
+            >
               <ShoppingCart className="h-4 w-4" />
               Add to Cart
             </Button>

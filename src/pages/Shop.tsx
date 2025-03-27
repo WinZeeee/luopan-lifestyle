@@ -33,6 +33,7 @@ const Shop = () => {
                   imageUrl={product.imageUrl}
                   description={product.description}
                   isCustom={product.category.toLowerCase().includes("custom")}
+                  product={product}
                 />
               </Link>
             </div>

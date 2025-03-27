@@ -2,6 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useCart } from "@/contexts/CartContext";
+import { Product } from "@/types/product";
 
 interface ProductCardProps {
   title: string;
@@ -9,9 +11,20 @@ interface ProductCardProps {
   imageUrl: string;
   description: string;
   isCustom?: boolean;
+  product?: Product;
 }
 
-export const ProductCard = ({ title, price, imageUrl, description, isCustom = false }: ProductCardProps) => {
+export const ProductCard = ({ title, price, imageUrl, description, isCustom = false, product }: ProductCardProps) => {
+  const { addItem } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product) {
+      addItem(product);
+    }
+  };
+
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg">
       <CardHeader className="p-0">
@@ -34,7 +47,11 @@ export const ProductCard = ({ title, price, imageUrl, description, isCustom = fa
         <p className="text-lg font-semibold">${price.toFixed(2)}</p>
       </CardContent>
       <CardFooter className="p-6 pt-0">
-        <Button className="w-full bg-primary hover:bg-primary/90 transition-colors duration-300">
+        <Button 
+          className="w-full bg-primary hover:bg-primary/90 transition-colors duration-300"
+          onClick={handleAddToCart}
+          disabled={!product}
+        >
           Add to Cart
         </Button>
       </CardFooter>

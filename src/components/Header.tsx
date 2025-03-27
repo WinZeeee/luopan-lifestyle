@@ -5,9 +5,12 @@ import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuL
 import { Link } from "react-router-dom";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useCart } from "@/contexts/CartContext";
+import { Badge } from "./ui/badge";
 
 export const Header = () => {
   const isMobile = useIsMobile();
+  const { toggleCart, totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -45,8 +48,13 @@ export const Header = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon">
+          <Button variant="ghost" size="icon" onClick={toggleCart} className="relative">
             <ShoppingCart className="h-5 w-5" />
+            {totalItems > 0 && (
+              <Badge className="absolute -right-1 -top-1 h-5 w-5 flex items-center justify-center p-0 text-xs">
+                {totalItems}
+              </Badge>
+            )}
           </Button>
           
           {/* Mobile Menu */}
