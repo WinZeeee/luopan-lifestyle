@@ -10,8 +10,8 @@ export const Footer = () => {
           <div className="flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin className="mt-1 h-4 w-4" />
             <p>
-              123 Phố Phong Thủy<br />
-              Quận 1, TP. Hồ Chí Minh<br />
+              A2/11b ấp 1 xã Vĩnh Lộc B<br />
+              Huyện Bình Chánh, TP. Hồ Chí Minh<br />
               Việt Nam
             </p>
           </div>
@@ -22,7 +22,7 @@ export const Footer = () => {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Phone className="h-4 w-4" />
-              <p>+84 (555) 123-4567</p>
+              <p>Phạm Vũ Đăng Khoa: 0796526132</p>
             </div>
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Mail className="h-4 w-4" />
