@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { RollingText } from "@/components/RollingText";
 import { useQuery } from "@tanstack/react-query";
 import { getProducts } from "@/api/products";
-import { Loader2, Compass } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 const Index = () => {
   const { data: products, isLoading } = useQuery({
@@ -18,48 +18,31 @@ const Index = () => {
   });
 
   return (
-    <div className="min-h-screen animate-fade-in bg-muted">
+    <div className="min-h-screen animate-fade-in">
       {/* Hero Section */}
-      <section className="relative flex min-h-[85vh] items-center justify-center bg-[url('/src/assets/feng-shui-bg.jpg')] bg-cover bg-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-primary/30 to-transparent"></div>
-        <div className="container relative z-10 px-4 text-center">
-          <div className="mb-4 inline-flex items-center justify-center gap-2 rounded-full bg-white/20 px-4 py-2 backdrop-blur-sm">
-            <Compass className="h-5 w-5 text-secondary animate-float" />
-            <span className="text-white text-sm font-medium">Nghệ Thuật Phong Thủy Truyền Thống</span>
-          </div>
-          
-          <h1 className="animate-fade-up font-serif text-4xl font-bold text-white md:text-6xl lg:text-7xl">
+      <section className="relative flex min-h-[80vh] items-center justify-center bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div className="container px-4 text-center">
+          <h1 className="animate-fade-up font-serif text-4xl font-bold text-primary md:text-6xl">
             La Bàn Phong Thủy <RollingText words={["Tinh xảo", "Tỉ Mỉ", "Cao Cấp", "Chuẩn Xác"]} />
           </h1>
-          
-          <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-white/85 [animation-delay:200ms] backdrop-blur-sm bg-black/10 p-4 rounded-lg">
+          <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-muted-foreground [animation-delay:200ms]">
             Khám phá bộ sưu tập la bàn phong thủy được chế tác tỉ mỉ, 
             làm thủ công bởi các nghệ nhân bậc thầy để đạt độ chính xác và cân bằng hoàn hảo.
           </p>
-          
-          <div className="mt-10 animate-fade-up [animation-delay:400ms]">
-            <Link to="/shop">
-              <Button className="bg-secondary hover:bg-secondary/90 text-secondary-foreground px-8 py-6 text-lg font-serif border border-secondary/50 shadow-lg">
-                Khám Phá Bộ Sưu Tập
-              </Button>
-            </Link>
-          </div>
+          <Link to="/shop">
+            <Button className="mt-8 animate-fade-up bg-primary px-8 py-6 text-lg hover:bg-primary/90 [animation-delay:400ms]">
+              Khám Phá Bộ Sưu Tập
+            </Button>
+          </Link>
         </div>
-        
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-muted to-transparent"></div>
       </section>
 
       {/* Featured Products Section */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="container px-4">
-          <div className="mb-14 text-center">
-            <h2 className="inline-block border-b-2 border-secondary pb-2 text-center font-serif text-3xl font-bold text-primary animate-fade-up">
-              Sản Phẩm Nổi Bật
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Những sản phẩm la bàn được chế tác tỉ mỉ, kết hợp giữa kỹ thuật truyền thống và thiết kế hiện đại
-            </p>
-          </div>
+          <h2 className="mb-12 text-center font-serif text-3xl font-bold animate-fade-up">
+            Sản Phẩm Nổi Bật
+          </h2>
           
           {isLoading ? (
             <div className="flex justify-center py-8">
@@ -89,7 +72,7 @@ const Index = () => {
           
           <div className="mt-12 text-center">
             <Link to="/shop">
-              <Button variant="outline" size="lg" className="font-serif border-2 border-primary/30 text-primary">
+              <Button variant="outline" size="lg">
                 Xem Tất Cả Sản Phẩm
               </Button>
             </Link>
@@ -101,22 +84,19 @@ const Index = () => {
       <WarrantyBanner />
 
       {/* Custom Orders Section */}
-      <section className="bg-[url('/src/assets/feng-shui-bg.jpg')] bg-cover bg-fixed py-20 relative">
-        <div className="absolute inset-0 bg-secondary/40 backdrop-blur-sm"></div>
-        <div className="container relative z-10 px-4 text-center">
-          <div className="mx-auto max-w-3xl rounded-xl bg-white/90 p-8 shadow-xl backdrop-blur-md">
-            <h2 className="mb-6 font-serif text-3xl font-bold text-primary">Đặt Hàng La Bàn Theo Yêu Cầu</h2>
-            <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
-              Bạn đang tìm kiếm một chiếc la bàn độc đáo? Chúng tôi cung cấp dịch vụ làm la bàn 
-              theo đúng thông số kỹ thuật của bạn. Mỗi sản phẩm đều được chế tác cẩn thận bởi 
-              các nghệ nhân bậc thầy của chúng tôi.
-            </p>
-            <Link to="/custom">
-              <Button className="bg-accent border border-accent/50 text-accent-foreground hover:bg-accent/90 font-serif">
-                Bắt Đầu Đặt Hàng Theo Yêu Cầu
-              </Button>
-            </Link>
-          </div>
+      <section className="bg-secondary/5 py-16">
+        <div className="container px-4 text-center">
+          <h2 className="mb-6 font-serif text-3xl font-bold">Đặt Hàng La Bàn Theo Yêu Cầu</h2>
+          <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
+            Bạn đang tìm kiếm một chiếc la bàn độc đáo? Chúng tôi cung cấp dịch vụ làm la bàn 
+            theo đúng thông số kỹ thuật của bạn. Mỗi sản phẩm đều được chế tác cẩn thận bởi 
+            các nghệ nhân bậc thầy của chúng tôi.
+          </p>
+          <Link to="/custom">
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
+              Bắt Đầu Đặt Hàng Theo Yêu Cầu
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
