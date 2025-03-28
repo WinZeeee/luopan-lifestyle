@@ -57,10 +57,6 @@ export default {
       fontFamily: {
         serif: ["Noto Serif TC", "serif"],
         sans: ["Inter", "sans-serif"],
-        "han-serif": ["'Noto Serif TC'", "'Han Serif TC'", "serif"],
-      },
-      backgroundImage: {
-        "hero-pattern": "url('https://images.unsplash.com/photo-1547864938-379eeb80a617?q=80')",
       },
       keyframes: {
         "fade-up": {

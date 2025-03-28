@@ -19,32 +19,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen animate-fade-in">
-      {/* Hero Section with Traditional Background */}
-      <section className="relative flex min-h-[80vh] items-center justify-center bg-hero-pattern bg-cover bg-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-primary/30"></div>
-        <div className="container relative z-10 px-4 text-center">
-          <h1 className="animate-fade-up font-han-serif text-4xl font-bold text-white md:text-6xl">
+      {/* Hero Section */}
+      <section className="relative flex min-h-[80vh] items-center justify-center bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div className="container px-4 text-center">
+          <h1 className="animate-fade-up font-serif text-4xl font-bold text-primary md:text-6xl">
             La Bàn Phong Thủy <RollingText words={["Tinh xảo", "Tỉ Mỉ", "Cao Cấp", "Chuẩn Xác"]} />
           </h1>
-          <div className="mx-auto mt-4 h-0.5 w-24 bg-secondary"></div>
-          <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-white/90 [animation-delay:200ms]">
+          <p className="mx-auto mt-6 max-w-2xl animate-fade-up text-lg text-muted-foreground [animation-delay:200ms]">
             Khám phá bộ sưu tập la bàn phong thủy được chế tác tỉ mỉ, 
             làm thủ công bởi các nghệ nhân bậc thầy để đạt độ chính xác và cân bằng hoàn hảo.
           </p>
           <Link to="/shop">
-            <Button className="mt-8 animate-fade-up bg-secondary px-8 py-6 text-lg text-secondary-foreground hover:bg-secondary/90 [animation-delay:400ms]">
+            <Button className="mt-8 animate-fade-up bg-primary px-8 py-6 text-lg hover:bg-primary/90 [animation-delay:400ms]">
               Khám Phá Bộ Sưu Tập
             </Button>
           </Link>
         </div>
-        
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent"></div>
       </section>
 
       {/* Featured Products Section */}
       <section className="py-16">
         <div className="container px-4">
-          <h2 className="mb-12 text-center font-han-serif text-3xl font-bold animate-fade-up">
+          <h2 className="mb-12 text-center font-serif text-3xl font-bold animate-fade-up">
             Sản Phẩm Nổi Bật
           </h2>
           
@@ -76,7 +72,7 @@ const Index = () => {
           
           <div className="mt-12 text-center">
             <Link to="/shop">
-              <Button variant="outline" size="lg" className="font-han-serif">
+              <Button variant="outline" size="lg">
                 Xem Tất Cả Sản Phẩm
               </Button>
             </Link>
@@ -88,17 +84,16 @@ const Index = () => {
       <WarrantyBanner />
 
       {/* Custom Orders Section */}
-      <section className="bg-primary/5 py-16">
+      <section className="bg-secondary/5 py-16">
         <div className="container px-4 text-center">
-          <h2 className="mb-6 font-han-serif text-3xl font-bold">Đặt Hàng La Bàn Theo Yêu Cầu</h2>
-          <div className="mx-auto mb-4 h-0.5 w-16 bg-secondary"></div>
+          <h2 className="mb-6 font-serif text-3xl font-bold">Đặt Hàng La Bàn Theo Yêu Cầu</h2>
           <p className="mx-auto mb-8 max-w-2xl text-muted-foreground">
             Bạn đang tìm kiếm một chiếc la bàn độc đáo? Chúng tôi cung cấp dịch vụ làm la bàn 
             theo đúng thông số kỹ thuật của bạn. Mỗi sản phẩm đều được chế tác cẩn thận bởi 
             các nghệ nhân bậc thầy của chúng tôi.
           </p>
           <Link to="/custom">
-            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-han-serif">
+            <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90">
               Bắt Đầu Đặt Hàng Theo Yêu Cầu
             </Button>
           </Link>
