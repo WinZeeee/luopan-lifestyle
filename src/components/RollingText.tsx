@@ -35,7 +35,7 @@ export const RollingText = ({ words, delay = 2500 }: RollingTextProps) => {
   }, [words, delay]);
 
   return (
-    <span className={`inline-block min-w-32 transition-all duration-500 ${
+    <span className={`inline-block min-w-32 transition-all duration-500 text-secondary ${
       animationState === "entering" 
         ? "translate-y-[-10px] opacity-0" 
         : animationState === "exiting" 

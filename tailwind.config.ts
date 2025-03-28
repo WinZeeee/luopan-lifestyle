@@ -26,20 +26,20 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#8B0000", // Deep red
+          DEFAULT: "#8B0000", // Deep red - traditional feng shui color for prosperity
           foreground: "#ffffff",
         },
         secondary: {
-          DEFAULT: "#D4AF37", // Gold
+          DEFAULT: "#D4AF37", // Rich gold - symbolizing wealth
           foreground: "#000000",
         },
         accent: {
-          DEFAULT: "#00A86B", // Jade green
+          DEFAULT: "#006E51", // Deeper jade green - symbolizing harmony
           foreground: "#ffffff",
         },
         muted: {
-          DEFAULT: "#f3f3f3",
-          foreground: "#666666",
+          DEFAULT: "#F5F2E8", // Warm off-white - traditional paper color
+          foreground: "#5F5242", // Warm gray-brown
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -55,7 +55,7 @@ export default {
         },
       },
       fontFamily: {
-        serif: ["Noto Serif TC", "serif"],
+        serif: ["Spectral", "Noto Serif TC", "serif"],
         sans: ["Inter", "sans-serif"],
       },
       keyframes: {
@@ -77,10 +77,22 @@ export default {
             opacity: "1",
           },
         },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-10px)",
+          },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
         "fade-in": "fade-in 0.3s ease-out",
+        "float": "float 6s ease-in-out infinite",
+      },
+      backgroundImage: {
+        'hero-pattern': "url('/src/assets/feng-shui-bg.jpg')",
       },
     },
   },
