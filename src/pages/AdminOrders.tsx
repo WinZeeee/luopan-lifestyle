@@ -28,6 +28,15 @@ const statusIcons = {
   cancelled: <XCircle className="h-4 w-4" />,
 };
 
+// Vietnamese translations for status
+const statusTranslations = {
+  pending: "Đang chờ",
+  confirmed: "Đã xác nhận",
+  shipped: "Đã gửi hàng",
+  delivered: "Đã giao hàng",
+  cancelled: "Đã hủy",
+};
+
 const AdminOrders = () => {
   const { data: orders, isLoading, refetch } = useQuery({
     queryKey: ['orders'],
@@ -37,6 +46,11 @@ const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [notes, setNotes] = useState("");
+
+  // Format price in VND
+  const formatPrice = (price: number) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VNĐ";
+  };
 
   const openOrderDetails = (order: Order) => {
     setSelectedOrder(order);
@@ -56,14 +70,14 @@ const AdminOrders = () => {
       const success = await updateOrderStatus(selectedOrder.id, status, notes);
       
       if (success) {
-        toast.success(`Order status updated to ${status}`);
+        toast.success(`Đã cập nhật trạng thái đơn hàng thành ${statusTranslations[status]}`);
         refetch();
         closeOrderDetails();
       } else {
-        toast.error("Failed to update order status");
+        toast.error("Không thể cập nhật trạng thái đơn hàng");
       }
     } catch (error) {
-      toast.error("An error occurred while updating the order status");
+      toast.error("Đã xảy ra lỗi khi cập nhật trạng thái đơn hàng");
       console.error(error);
     } finally {
       setIsUpdating(false);
@@ -82,9 +96,9 @@ const AdminOrders = () => {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Order Management</CardTitle>
+          <CardTitle>Quản lý đơn hàng</CardTitle>
           <CardDescription>
-            View and manage customer orders
+            Xem và quản lý đơn hàng của khách hàng
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -92,12 +106,12 @@ const AdminOrders = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Order ID</TableHead>
-                  <TableHead>Customer</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead>Total</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>Mã đơn hàng</TableHead>
+                  <TableHead>Khách hàng</TableHead>
+                  <TableHead>Ngày đặt</TableHead>
+                  <TableHead>Tổng tiền</TableHead>
+                  <TableHead>Trạng thái</TableHead>
+                  <TableHead className="text-right">Thao tác</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -115,12 +129,12 @@ const AdminOrders = () => {
                     <TableCell>
                       {new Date(order.orderDate).toLocaleDateString()}
                     </TableCell>
-                    <TableCell>${order.totalAmount.toFixed(2)}</TableCell>
+                    <TableCell>{formatPrice(order.totalAmount)}</TableCell>
                     <TableCell>
                       <Badge className={`${statusColors[order.status]} capitalize`}>
                         <span className="flex items-center gap-1">
                           {statusIcons[order.status]}
-                          {order.status}
+                          {statusTranslations[order.status]}
                         </span>
                       </Badge>
                     </TableCell>
@@ -139,16 +153,16 @@ const AdminOrders = () => {
                           {selectedOrder && (
                             <>
                               <SheetHeader>
-                                <SheetTitle>Order Details</SheetTitle>
+                                <SheetTitle>Chi tiết đơn hàng</SheetTitle>
                               </SheetHeader>
                               <div className="space-y-6 py-6">
                                 <div className="grid grid-cols-2 gap-4">
                                   <div>
-                                    <h3 className="text-sm font-medium">Order ID</h3>
+                                    <h3 className="text-sm font-medium">Mã đơn hàng</h3>
                                     <p className="text-sm">{selectedOrder.id}</p>
                                   </div>
                                   <div>
-                                    <h3 className="text-sm font-medium">Date</h3>
+                                    <h3 className="text-sm font-medium">Ngày đặt</h3>
                                     <p className="text-sm">
                                       {new Date(selectedOrder.orderDate).toLocaleString()}
                                     </p>
@@ -156,7 +170,7 @@ const AdminOrders = () => {
                                 </div>
 
                                 <div>
-                                  <h3 className="text-sm font-medium mb-2">Customer Information</h3>
+                                  <h3 className="text-sm font-medium mb-2">Thông tin khách hàng</h3>
                                   <div className="space-y-1">
                                     <p className="text-sm">{selectedOrder.customerName}</p>
                                     <p className="text-sm">{selectedOrder.customerEmail}</p>
@@ -165,18 +179,18 @@ const AdminOrders = () => {
                                 </div>
 
                                 <div>
-                                  <h3 className="text-sm font-medium mb-2">Items</h3>
+                                  <h3 className="text-sm font-medium mb-2">Sản phẩm</h3>
                                   <div className="divide-y">
                                     {selectedOrder.items.map((item, index) => (
                                       <div key={index} className="py-2 flex justify-between">
                                         <div>
                                           <p className="text-sm font-medium">{item.productName}</p>
                                           <p className="text-xs text-muted-foreground">
-                                            {item.quantity} × ${item.unitPrice.toFixed(2)}
+                                            {item.quantity} × {formatPrice(item.unitPrice)}
                                           </p>
                                         </div>
                                         <p className="text-sm">
-                                          ${(item.quantity * item.unitPrice).toFixed(2)}
+                                          {formatPrice(item.quantity * item.unitPrice)}
                                         </p>
                                       </div>
                                     ))}
@@ -184,34 +198,34 @@ const AdminOrders = () => {
                                 </div>
 
                                 <div>
-                                  <h3 className="text-sm font-medium mb-2">Order Total</h3>
+                                  <h3 className="text-sm font-medium mb-2">Tổng đơn hàng</h3>
                                   <p className="text-lg font-bold">
-                                    ${selectedOrder.totalAmount.toFixed(2)}
+                                    {formatPrice(selectedOrder.totalAmount)}
                                   </p>
                                 </div>
 
                                 <div>
-                                  <h3 className="text-sm font-medium mb-2">Current Status</h3>
+                                  <h3 className="text-sm font-medium mb-2">Trạng thái hiện tại</h3>
                                   <Badge className={`${statusColors[selectedOrder.status]} capitalize`}>
                                     <span className="flex items-center gap-1">
                                       {statusIcons[selectedOrder.status]}
-                                      {selectedOrder.status}
+                                      {statusTranslations[selectedOrder.status]}
                                     </span>
                                   </Badge>
                                 </div>
 
                                 <div>
-                                  <h3 className="text-sm font-medium mb-2">Notes</h3>
+                                  <h3 className="text-sm font-medium mb-2">Ghi chú</h3>
                                   <Textarea
                                     value={notes}
                                     onChange={(e) => setNotes(e.target.value)}
-                                    placeholder="Add notes about this order"
+                                    placeholder="Thêm ghi chú về đơn hàng này"
                                     className="min-h-[100px]"
                                   />
                                 </div>
 
                                 <div className="space-y-3">
-                                  <h3 className="text-sm font-medium">Update Status</h3>
+                                  <h3 className="text-sm font-medium">Cập nhật trạng thái</h3>
                                   <div className="flex flex-wrap gap-2">
                                     <Button
                                       variant="outline"
@@ -220,7 +234,7 @@ const AdminOrders = () => {
                                       onClick={() => handleStatusUpdate("pending")}
                                       disabled={isUpdating || selectedOrder.status === "pending"}
                                     >
-                                      {statusIcons.pending} Pending
+                                      {statusIcons.pending} Đang chờ
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -229,7 +243,7 @@ const AdminOrders = () => {
                                       onClick={() => handleStatusUpdate("confirmed")}
                                       disabled={isUpdating || selectedOrder.status === "confirmed"}
                                     >
-                                      {statusIcons.confirmed} Confirmed
+                                      {statusIcons.confirmed} Đã xác nhận
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -238,7 +252,7 @@ const AdminOrders = () => {
                                       onClick={() => handleStatusUpdate("shipped")}
                                       disabled={isUpdating || selectedOrder.status === "shipped"}
                                     >
-                                      {statusIcons.shipped} Shipped
+                                      {statusIcons.shipped} Đã gửi hàng
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -247,7 +261,7 @@ const AdminOrders = () => {
                                       onClick={() => handleStatusUpdate("delivered")}
                                       disabled={isUpdating || selectedOrder.status === "delivered"}
                                     >
-                                      {statusIcons.delivered} Delivered
+                                      {statusIcons.delivered} Đã giao hàng
                                     </Button>
                                     <Button
                                       variant="outline"
@@ -256,7 +270,7 @@ const AdminOrders = () => {
                                       onClick={() => handleStatusUpdate("cancelled")}
                                       disabled={isUpdating || selectedOrder.status === "cancelled"}
                                     >
-                                      {statusIcons.cancelled} Cancelled
+                                      {statusIcons.cancelled} Đã hủy
                                     </Button>
                                   </div>
                                 </div>
@@ -272,7 +286,7 @@ const AdminOrders = () => {
             </Table>
           ) : (
             <div className="text-center py-6">
-              <p className="text-muted-foreground">No orders found</p>
+              <p className="text-muted-foreground">Không tìm thấy đơn hàng nào</p>
             </div>
           )}
         </CardContent>

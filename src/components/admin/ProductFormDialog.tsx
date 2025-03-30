@@ -15,14 +15,14 @@ import { useToast } from "@/components/ui/use-toast";
 
 // Define the schema outside the component so it's not recreated on each render
 const productFormSchema = z.object({
-  name: z.string().min(3, "Name must be at least 3 characters"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  price: z.string().refine(val => !isNaN(Number(val)) && Number(val) > 0, "Price must be a positive number"),
-  thumbnailUrl: z.string().url("Must be a valid URL"),
-  imageUrls: z.array(z.string().url("Must be a valid URL")),
-  category: z.string().min(2, "Category must be at least 2 characters"),
+  name: z.string().min(3, "Tên sản phẩm phải có ít nhất 3 ký tự"),
+  description: z.string().min(10, "Mô tả phải có ít nhất 10 ký tự"),
+  price: z.string().refine(val => !isNaN(Number(val)) && Number(val) > 0, "Giá phải là số dương"),
+  thumbnailUrl: z.string().url("Phải là URL hợp lệ"),
+  imageUrls: z.array(z.string().url("Phải là URL hợp lệ")),
+  category: z.string().min(2, "Danh mục phải có ít nhất 2 ký tự"),
   featured: z.boolean().default(false),
-  stock: z.string().refine(val => !isNaN(Number(val)) && Number(val) >= 0, "Stock must be a non-negative number"),
+  stock: z.string().refine(val => !isNaN(Number(val)) && Number(val) >= 0, "Số lượng phải là số không âm"),
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
@@ -70,8 +70,8 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
     
     if (!/^https?:\/\/.+/.test(newImageUrl)) {
       toast({
-        title: "Invalid URL",
-        description: "Please enter a valid URL starting with http:// or https://",
+        title: "URL không hợp lệ",
+        description: "Vui lòng nhập URL hợp lệ bắt đầu bằng http:// hoặc https://",
         variant: "destructive",
       });
       return;
@@ -93,9 +93,9 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{product ? "Edit Product" : "Create New Product"}</DialogTitle>
+          <DialogTitle>{product ? "Chỉnh Sửa Sản Phẩm" : "Tạo Sản Phẩm Mới"}</DialogTitle>
           <DialogDescription>
-            {product ? "Update the details of your product" : "Fill in the details to create a new product"}
+            {product ? "Cập nhật thông tin sản phẩm của bạn" : "Điền thông tin để tạo sản phẩm mới"}
           </DialogDescription>
         </DialogHeader>
         
@@ -106,7 +106,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Tên sản phẩm</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -120,7 +120,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Description</FormLabel>
+                  <FormLabel>Mô tả</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
@@ -135,7 +135,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Price</FormLabel>
+                    <FormLabel>Giá (VNĐ)</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -149,7 +149,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                 name="stock"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Stock</FormLabel>
+                    <FormLabel>Số lượng</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -165,7 +165,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                 name="category"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
+                    <FormLabel>Danh mục</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -179,7 +179,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                 name="thumbnailUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Thumbnail Image URL</FormLabel>
+                    <FormLabel>URL hình ảnh đại diện</FormLabel>
                     <FormControl>
                       <Input {...field} placeholder="https://example.com/image.jpg" />
                     </FormControl>
@@ -190,7 +190,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
             </div>
             
             <div className="space-y-2">
-              <FormLabel>Additional Images</FormLabel>
+              <FormLabel>Hình ảnh bổ sung</FormLabel>
               <div className="flex items-center space-x-2">
                 <Input 
                   value={newImageUrl} 
@@ -203,7 +203,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                   variant="secondary"
                 >
                   <ImagePlus className="h-4 w-4 mr-2" />
-                  Add
+                  Thêm
                 </Button>
               </div>
               
@@ -212,7 +212,7 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                   <div key={index} className="flex items-center justify-between rounded-md border p-2">
                     <div className="flex items-center space-x-2 overflow-hidden">
                       <div className="h-10 w-10 shrink-0 overflow-hidden rounded-md">
-                        <img src={url} alt={`Product image ${index + 1}`} className="h-full w-full object-cover" />
+                        <img src={url} alt={`Hình ảnh sản phẩm ${index + 1}`} className="h-full w-full object-cover" />
                       </div>
                       <span className="truncate text-sm">{url}</span>
                     </div>
@@ -241,9 +241,9 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>Featured Product</FormLabel>
+                    <FormLabel>Sản phẩm nổi bật</FormLabel>
                     <p className="text-sm text-muted-foreground">
-                      This product will be displayed in featured sections
+                      Sản phẩm này sẽ được hiển thị trong các phần nổi bật
                     </p>
                   </div>
                 </FormItem>
@@ -255,10 +255,10 @@ export const ProductFormDialog = ({ open, onOpenChange, product, onSubmit }: Pro
                 {isSubmitting ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {product ? "Updating..." : "Creating..."}
+                    {product ? "Đang cập nhật..." : "Đang tạo..."}
                   </>
                 ) : (
-                  product ? "Update Product" : "Create Product"
+                  product ? "Cập nhật sản phẩm" : "Tạo sản phẩm"
                 )}
               </Button>
             </DialogFooter>

@@ -27,11 +27,11 @@ type BlogFormValues = {
 
 // Then define the schema with the transformation for tags
 const blogFormSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
-  excerpt: z.string().min(10, "Excerpt must be at least 10 characters"),
-  content: z.string().min(50, "Content must be at least 50 characters"),
-  author: z.string().min(2, "Author name must be at least 2 characters"),
-  imageUrl: z.string().url("Must be a valid URL"),
+  title: z.string().min(3, "Tiêu đề phải có ít nhất 3 ký tự"),
+  excerpt: z.string().min(10, "Tóm tắt phải có ít nhất 10 ký tự"),
+  content: z.string().min(50, "Nội dung phải có ít nhất 50 ký tự"),
+  author: z.string().min(2, "Tên tác giả phải có ít nhất 2 ký tự"),
+  imageUrl: z.string().url("Phải là URL hợp lệ"),
   tags: z.string().transform((val) => val.split(",").map(tag => tag.trim())),
 });
 
@@ -52,15 +52,15 @@ const AdminBlog = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
       toast({
-        title: "Post created",
-        description: "Your blog post has been successfully created.",
+        title: "Đã tạo bài viết",
+        description: "Bài viết của bạn đã được tạo thành công.",
       });
       setIsDialogOpen(false);
     },
     onError: (error) => {
       toast({
-        title: "Error",
-        description: "Failed to create blog post. Please try again.",
+        title: "Lỗi",
+        description: "Không thể tạo bài viết. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
@@ -72,15 +72,15 @@ const AdminBlog = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
       toast({
-        title: "Post updated",
-        description: "Your blog post has been successfully updated.",
+        title: "Đã cập nhật bài viết",
+        description: "Bài viết của bạn đã được cập nhật thành công.",
       });
       setIsDialogOpen(false);
     },
     onError: (error) => {
       toast({
-        title: "Error",
-        description: "Failed to update blog post. Please try again.",
+        title: "Lỗi",
+        description: "Không thể cập nhật bài viết. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
@@ -91,15 +91,15 @@ const AdminBlog = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['blogPosts'] });
       toast({
-        title: "Post deleted",
-        description: "Your blog post has been successfully deleted.",
+        title: "Đã xóa bài viết",
+        description: "Bài viết của bạn đã được xóa thành công.",
       });
       setIsDeleteDialogOpen(false);
     },
     onError: (error) => {
       toast({
-        title: "Error",
-        description: "Failed to delete blog post. Please try again.",
+        title: "Lỗi",
+        description: "Không thể xóa bài viết. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
@@ -173,10 +173,10 @@ const AdminBlog = () => {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Blog Management</h1>
+        <h1 className="text-2xl font-bold">Quản lý bài viết</h1>
         <Button onClick={() => handleOpenDialog()} className="gap-2">
           <Plus className="h-4 w-4" />
-          New Post
+          Bài viết mới
         </Button>
       </div>
 
@@ -191,7 +191,7 @@ const AdminBlog = () => {
               <div>
                 <h2 className="font-medium">{post.title}</h2>
                 <p className="text-sm text-muted-foreground">
-                  By {post.author} • {post.date}
+                  Tác giả: {post.author} • {post.date}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {post.tags.map((tag, index) => (
@@ -230,9 +230,9 @@ const AdminBlog = () => {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>{currentPost ? "Edit Blog Post" : "Create New Blog Post"}</DialogTitle>
+            <DialogTitle>{currentPost ? "Chỉnh sửa bài viết" : "Tạo bài viết mới"}</DialogTitle>
             <DialogDescription>
-              {currentPost ? "Update the details of your blog post" : "Fill in the details to create a new blog post"}
+              {currentPost ? "Cập nhật thông tin của bài viết" : "Điền thông tin để tạo bài viết mới"}
             </DialogDescription>
           </DialogHeader>
           
@@ -243,7 +243,7 @@ const AdminBlog = () => {
                 name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Tiêu đề</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -257,7 +257,7 @@ const AdminBlog = () => {
                 name="excerpt"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Excerpt</FormLabel>
+                    <FormLabel>Tóm tắt</FormLabel>
                     <FormControl>
                       <Textarea {...field} />
                     </FormControl>
@@ -271,7 +271,7 @@ const AdminBlog = () => {
                 name="content"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Content</FormLabel>
+                    <FormLabel>Nội dung</FormLabel>
                     <FormControl>
                       <Textarea className="min-h-[200px]" {...field} />
                     </FormControl>
@@ -286,7 +286,7 @@ const AdminBlog = () => {
                   name="author"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Author</FormLabel>
+                      <FormLabel>Tác giả</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -300,7 +300,7 @@ const AdminBlog = () => {
                   name="imageUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Image URL</FormLabel>
+                      <FormLabel>URL hình ảnh</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -315,7 +315,7 @@ const AdminBlog = () => {
                 name="tags"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Tags (comma separated)</FormLabel>
+                    <FormLabel>Thẻ (phân cách bằng dấu phẩy)</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -332,7 +332,7 @@ const AdminBlog = () => {
                   {(createMutation.isPending || updateMutation.isPending) && (
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   )}
-                  {currentPost ? "Update Post" : "Create Post"}
+                  {currentPost ? "Cập nhật bài viết" : "Tạo bài viết"}
                 </Button>
               </DialogFooter>
             </form>
@@ -343,14 +343,14 @@ const AdminBlog = () => {
       <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Bạn có chắc chắn?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the blog post
+              Hành động này không thể hoàn tác. Điều này sẽ xóa vĩnh viễn bài viết
               "{currentPost?.title}".
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction 
               onClick={confirmDelete}
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -358,7 +358,7 @@ const AdminBlog = () => {
               {deleteMutation.isPending && (
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               )}
-              Delete
+              Xóa
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

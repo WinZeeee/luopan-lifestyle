@@ -10,6 +10,11 @@ interface ProductListItemProps {
 }
 
 export const ProductListItem = ({ product, onEdit, onDelete }: ProductListItemProps) => {
+  // Format price in VND
+  const formatPrice = (price: number) => {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
   return (
     <div className="flex items-start justify-between rounded-lg border p-4">
       <div className="flex gap-4">
@@ -28,11 +33,11 @@ export const ProductListItem = ({ product, onEdit, onDelete }: ProductListItemPr
           <div className="mt-2 flex items-center gap-4">
             <span className="flex items-center text-sm">
               <DollarSign className="mr-1 h-3 w-3" />
-              {product.price.toFixed(2)}
+              {formatPrice(product.price)} VNĐ
             </span>
             <span className="flex items-center text-sm">
               <Package className="mr-1 h-3 w-3" />
-              {product.stock} in stock
+              {product.stock} trong kho
             </span>
             <span className="flex items-center text-sm">
               <Tag className="mr-1 h-3 w-3" />
@@ -41,10 +46,10 @@ export const ProductListItem = ({ product, onEdit, onDelete }: ProductListItemPr
           </div>
           <div className="mt-1 text-sm text-muted-foreground">
             {product.imageUrls?.length === 1 
-              ? "1 additional image" 
+              ? "1 hình ảnh bổ sung" 
               : product.imageUrls?.length > 1 
-                ? `${product.imageUrls.length} additional images` 
-                : "No additional images"}
+                ? `${product.imageUrls.length} hình ảnh bổ sung` 
+                : "Không có hình ảnh bổ sung"}
           </div>
         </div>
       </div>

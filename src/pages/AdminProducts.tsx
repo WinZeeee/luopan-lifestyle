@@ -49,15 +49,15 @@ const AdminProducts = () => {
         // Update existing product
         await updateProduct(currentProduct.id, productData);
         toast({
-          title: "Product updated",
-          description: `Successfully updated product "${values.name}"`,
+          title: "Đã cập nhật sản phẩm",
+          description: `Đã cập nhật thành công sản phẩm "${values.name}"`,
         });
       } else {
         // Create new product
         await createProduct(productData);
         toast({
-          title: "Product created",
-          description: `Successfully created product "${values.name}"`,
+          title: "Đã tạo sản phẩm",
+          description: `Đã tạo thành công sản phẩm "${values.name}"`,
         });
       }
       
@@ -65,8 +65,8 @@ const AdminProducts = () => {
     } catch (error) {
       console.error("Product save error:", error);
       toast({
-        title: "Error",
-        description: "Failed to save product. Please try again.",
+        title: "Lỗi",
+        description: "Không thể lưu sản phẩm. Vui lòng thử lại.",
         variant: "destructive",
       });
       throw error; // Re-throw to be handled by the form component
@@ -77,14 +77,14 @@ const AdminProducts = () => {
     try {
       await deleteProduct(product.id);
       toast({
-        title: "Product deleted",
-        description: `Successfully deleted product "${product.name}"`,
+        title: "Đã xóa sản phẩm",
+        description: `Đã xóa thành công sản phẩm "${product.name}"`,
       });
       refetch();
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete product. Please try again.",
+        title: "Lỗi",
+        description: "Không thể xóa sản phẩm. Vui lòng thử lại.",
         variant: "destructive",
       });
     }
@@ -93,10 +93,10 @@ const AdminProducts = () => {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Product Management</h1>
+        <h1 className="text-2xl font-bold">Quản lý sản phẩm</h1>
         <Button onClick={() => handleOpenDialog()} className="gap-2">
           <Plus className="h-4 w-4" />
-          New Product
+          Sản phẩm mới
         </Button>
       </div>
 

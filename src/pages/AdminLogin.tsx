@@ -39,27 +39,27 @@ const AdminLogin = () => {
       
       if (profileError) {
         console.error("Admin check error:", profileError);
-        throw new Error('Failed to verify admin privileges');
+        throw new Error('Không thể xác minh quyền admin');
       }
       
       if (!profileData) {
         await supabase.auth.signOut();
-        throw new Error('Not authorized as admin');
+        throw new Error('Không được phép truy cập với vai trò admin');
       }
       
       // Store admin authentication status in localStorage
       localStorage.setItem("adminAuthenticated", "true");
       
       toast({
-        title: "Login successful",
-        description: "Welcome to the admin dashboard",
+        title: "Đăng nhập thành công",
+        description: "Chào mừng đến với bảng điều khiển admin",
       });
       
       navigate("/admin/dashboard");
     } catch (error: any) {
       toast({
-        title: "Login failed",
-        description: error.message || "Invalid credentials",
+        title: "Đăng nhập thất bại",
+        description: error.message || "Thông tin đăng nhập không hợp lệ",
         variant: "destructive",
       });
       console.error("Login error:", error);
@@ -82,16 +82,16 @@ const AdminLogin = () => {
       if (error) throw error;
       
       toast({
-        title: "Account created",
-        description: "Your account has been created. You'll need to be assigned admin privileges by a database administrator before you can log in.",
+        title: "Đã tạo tài khoản",
+        description: "Tài khoản của bạn đã được tạo. Bạn cần được quản trị viên cơ sở dữ liệu cấp quyền admin trước khi có thể đăng nhập.",
       });
       
       // Switch to login tab
       setActiveTab("login");
     } catch (error: any) {
       toast({
-        title: "Signup failed",
-        description: error.message || "Could not create account",
+        title: "Đăng ký thất bại",
+        description: error.message || "Không thể tạo tài khoản",
         variant: "destructive",
       });
       console.error("Signup error:", error);
@@ -104,14 +104,14 @@ const AdminLogin = () => {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Admin Panel</CardTitle>
-          <CardDescription>Access the admin dashboard</CardDescription>
+          <CardTitle className="text-2xl font-bold">Bảng điều khiển Admin</CardTitle>
+          <CardDescription>Truy cập vào bảng điều khiển admin</CardDescription>
         </CardHeader>
         
         <Tabs value={activeTab} onValueChange={setActiveTab}>
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="login">Login</TabsTrigger>
-            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+            <TabsTrigger value="login">Đăng nhập</TabsTrigger>
+            <TabsTrigger value="signup">Đăng ký</TabsTrigger>
           </TabsList>
           
           <TabsContent value="login">
@@ -128,7 +128,7 @@ const AdminLogin = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="password-login" className="text-sm font-medium">Password</label>
+                  <label htmlFor="password-login" className="text-sm font-medium">Mật khẩu</label>
                   <Input
                     id="password-login"
                     type="password"
@@ -140,7 +140,7 @@ const AdminLogin = () => {
               </CardContent>
               <CardFooter>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Logging in..." : "Login"}
+                  {isLoading ? "Đang đăng nhập..." : "Đăng nhập"}
                 </Button>
               </CardFooter>
             </form>
@@ -160,7 +160,7 @@ const AdminLogin = () => {
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="password-signup" className="text-sm font-medium">Password</label>
+                  <label htmlFor="password-signup" className="text-sm font-medium">Mật khẩu</label>
                   <Input
                     id="password-signup"
                     type="password"
@@ -172,13 +172,13 @@ const AdminLogin = () => {
                 <Alert variant="default" className="bg-yellow-50 border-yellow-200">
                   <AlertCircle className="h-4 w-4 text-yellow-600" />
                   <AlertDescription className="text-yellow-700">
-                    After signing up, you'll need an admin to grant you admin privileges in the database.
+                    Sau khi đăng ký, bạn cần được quản trị viên cấp quyền admin trong cơ sở dữ liệu.
                   </AlertDescription>
                 </Alert>
               </CardContent>
               <CardFooter>
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? "Creating account..." : "Create Account"}
+                  {isLoading ? "Đang tạo tài khoản..." : "Tạo tài khoản"}
                 </Button>
               </CardFooter>
             </form>

@@ -13,8 +13,8 @@ const AdminLayout = () => {
   const handleLogout = () => {
     localStorage.removeItem("adminAuthenticated");
     toast({
-      title: "Logged out",
-      description: "You have been logged out successfully",
+      title: "Đã đăng xuất",
+      description: "Bạn đã đăng xuất thành công",
     });
     navigate("/admin/login");
   };
@@ -30,7 +30,7 @@ const AdminLayout = () => {
           <h1 className="text-xl font-bold">Luopan Crafts Admin</h1>
           <Button variant="ghost" onClick={handleLogout} className="gap-2">
             <LogOut className="h-4 w-4" />
-            Logout
+            Đăng xuất
           </Button>
         </div>
       </header>
@@ -39,15 +39,15 @@ const AdminLayout = () => {
           <TabsList className="mb-4">
             <TabsTrigger value="dashboard" className="gap-2">
               <LayoutDashboard className="h-4 w-4" />
-              Dashboard
+              Bảng điều khiển
             </TabsTrigger>
             <TabsTrigger value="products" className="gap-2">
               <ShoppingBag className="h-4 w-4" />
-              Products
+              Sản phẩm
             </TabsTrigger>
             <TabsTrigger value="orders" className="gap-2">
               <Package className="h-4 w-4" />
-              Orders
+              Đơn hàng
             </TabsTrigger>
             <TabsTrigger value="blog" className="gap-2">
               <BookOpen className="h-4 w-4" />
