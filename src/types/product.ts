@@ -4,7 +4,8 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  imageUrl: string;
+  thumbnailUrl: string;
+  imageUrls: string[];
   category: string;
   featured: boolean;
   stock: number;
@@ -18,7 +19,8 @@ export const toProduct = (row: any): Product => ({
   name: row.name,
   description: row.description,
   price: row.price,
-  imageUrl: row.image_url,
+  thumbnailUrl: row.thumbnail_url,
+  imageUrls: row.image_urls || [],
   category: row.category,
   featured: row.featured,
   stock: row.stock,
@@ -31,7 +33,8 @@ export const toProductRow = (product: Product): any => ({
   name: product.name,
   description: product.description,
   price: product.price,
-  image_url: product.imageUrl,
+  thumbnail_url: product.thumbnailUrl,
+  image_urls: product.imageUrls,
   category: product.category,
   featured: product.featured,
   stock: product.stock,

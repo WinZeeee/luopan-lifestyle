@@ -8,13 +8,13 @@ import { Product } from "@/types/product";
 interface ProductCardProps {
   title: string;
   price: number;
-  imageUrl: string;
+  thumbnailUrl: string;
   description: string;
   isCustom?: boolean;
   product?: Product;
 }
 
-export const ProductCard = ({ title, price, imageUrl, description, isCustom = false, product }: ProductCardProps) => {
+export const ProductCard = ({ title, price, thumbnailUrl, description, isCustom = false, product }: ProductCardProps) => {
   const { addItem } = useCart();
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -30,7 +30,7 @@ export const ProductCard = ({ title, price, imageUrl, description, isCustom = fa
       <CardHeader className="p-0">
         <div className="relative h-64 overflow-hidden">
           <img
-            src={imageUrl}
+            src={thumbnailUrl}
             alt={title}
             className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
           />

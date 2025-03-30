@@ -60,9 +60,10 @@ const Index = () => {
                     <ProductCard
                       title={product.name}
                       price={product.price}
-                      imageUrl={product.imageUrl}
+                      thumbnailUrl={product.thumbnailUrl}
                       description={product.description}
                       isCustom={product.category.toLowerCase().includes("custom")}
+                      product={product}
                     />
                   </Link>
                 </div>

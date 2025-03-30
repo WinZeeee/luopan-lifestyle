@@ -43,7 +43,8 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
       name: product.name,
       description: product.description,
       price: product.price,
-      image_url: product.imageUrl,
+      thumbnail_url: product.thumbnailUrl,
+      image_urls: product.imageUrls,
       category: product.category,
       featured: product.featured,
       stock: product.stock,
@@ -80,7 +81,8 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
     if (updates.name) productRow.name = updates.name;
     if (updates.description) productRow.description = updates.description;
     if (updates.price !== undefined) productRow.price = updates.price;
-    if (updates.imageUrl) productRow.image_url = updates.imageUrl;
+    if (updates.thumbnailUrl) productRow.thumbnail_url = updates.thumbnailUrl;
+    if (updates.imageUrls) productRow.image_urls = updates.imageUrls;
     if (updates.category) productRow.category = updates.category;
     if (updates.featured !== undefined) productRow.featured = updates.featured;
     if (updates.stock !== undefined) productRow.stock = updates.stock;

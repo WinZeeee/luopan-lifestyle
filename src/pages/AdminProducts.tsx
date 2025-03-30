@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Loader2, Pencil, Plus, Trash2, DollarSign, Package, Tag } from "lucide-react";
+import { Loader2, Pencil, Plus, Trash2, DollarSign, Package, Tag, X, ImagePlus } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Product } from "@/types/product";
 import { useForm } from "react-hook-form";
@@ -19,7 +19,8 @@ const productFormSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   price: z.string().refine(val => !isNaN(Number(val)) && Number(val) > 0, "Price must be a positive number"),
-  imageUrl: z.string().url("Must be a valid URL"),
+  thumbnailUrl: z.string().url("Must be a valid URL"),
+  imageUrls: z.array(z.string().url("Must be a valid URL")),
   category: z.string().min(2, "Category must be at least 2 characters"),
   featured: z.boolean().default(false),
   stock: z.string().refine(val => !isNaN(Number(val)) && Number(val) >= 0, "Stock must be a non-negative number"),
@@ -31,6 +32,7 @@ const AdminProducts = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newImageUrl, setNewImageUrl] = useState("");
   const { toast } = useToast();
   
   const { data: products, isLoading, refetch } = useQuery({
@@ -44,7 +46,8 @@ const AdminProducts = () => {
       name: "",
       description: "",
       price: "",
-      imageUrl: "",
+      thumbnailUrl: "",
+      imageUrls: [],
       category: "",
       featured: false,
       stock: "",
@@ -58,7 +61,8 @@ const AdminProducts = () => {
         name: product.name,
         description: product.description,
         price: product.price.toString(),
-        imageUrl: product.imageUrl,
+        thumbnailUrl: product.thumbnailUrl,
+        imageUrls: product.imageUrls || [],
         category: product.category,
         featured: product.featured,
         stock: product.stock.toString(),
@@ -69,7 +73,8 @@ const AdminProducts = () => {
         name: "",
         description: "",
         price: "",
-        imageUrl: "",
+        thumbnailUrl: "",
+        imageUrls: [],
         category: "",
         featured: false,
         stock: "",
@@ -87,7 +92,8 @@ const AdminProducts = () => {
         name: values.name,
         description: values.description,
         price: Number(values.price),
-        imageUrl: values.imageUrl,
+        thumbnailUrl: values.thumbnailUrl,
+        imageUrls: values.imageUrls,
         category: values.category,
         featured: values.featured,
         stock: Number(values.stock),
@@ -142,6 +148,30 @@ const AdminProducts = () => {
     }
   };
 
+  const addImageUrl = () => {
+    if (!newImageUrl) return;
+    
+    if (!/^https?:\/\/.+/.test(newImageUrl)) {
+      toast({
+        title: "Invalid URL",
+        description: "Please enter a valid URL starting with http:// or https://",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    const currentUrls = form.getValues("imageUrls") || [];
+    form.setValue("imageUrls", [...currentUrls, newImageUrl]);
+    setNewImageUrl("");
+  };
+
+  const removeImageUrl = (index: number) => {
+    const currentUrls = form.getValues("imageUrls") || [];
+    const newUrls = [...currentUrls];
+    newUrls.splice(index, 1);
+    form.setValue("imageUrls", newUrls);
+  };
+
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
@@ -163,7 +193,7 @@ const AdminProducts = () => {
               <div className="flex gap-4">
                 <div className="h-16 w-16 overflow-hidden rounded-md">
                   <img 
-                    src={product.imageUrl} 
+                    src={product.thumbnailUrl} 
                     alt={product.name} 
                     className="h-full w-full object-cover"
                   />
@@ -187,6 +217,13 @@ const AdminProducts = () => {
                       {product.category}
                     </span>
                   </div>
+                  <div className="mt-1 text-sm text-muted-foreground">
+                    {product.imageUrls?.length === 1 
+                      ? "1 additional image" 
+                      : product.imageUrls?.length > 1 
+                        ? `${product.imageUrls.length} additional images` 
+                        : "No additional images"}
+                  </div>
                 </div>
               </div>
               <div className="flex space-x-2">
@@ -203,7 +240,7 @@ const AdminProducts = () => {
       )}
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>{currentProduct ? "Edit Product" : "Create New Product"}</DialogTitle>
             <DialogDescription>
@@ -288,17 +325,57 @@ const AdminProducts = () => {
                 
                 <FormField
                   control={form.control}
-                  name="imageUrl"
+                  name="thumbnailUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Image URL</FormLabel>
+                      <FormLabel>Thumbnail Image URL</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} placeholder="https://example.com/image.jpg" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
+              </div>
+              
+              <div className="space-y-2">
+                <FormLabel>Additional Images</FormLabel>
+                <div className="flex items-center space-x-2">
+                  <Input 
+                    value={newImageUrl} 
+                    onChange={(e) => setNewImageUrl(e.target.value)}
+                    placeholder="https://example.com/image.jpg"
+                  />
+                  <Button 
+                    type="button" 
+                    onClick={addImageUrl}
+                    variant="secondary"
+                  >
+                    <ImagePlus className="h-4 w-4 mr-2" />
+                    Add
+                  </Button>
+                </div>
+                
+                <div className="mt-2 space-y-2">
+                  {form.watch("imageUrls")?.map((url, index) => (
+                    <div key={index} className="flex items-center justify-between rounded-md border p-2">
+                      <div className="flex items-center space-x-2 overflow-hidden">
+                        <div className="h-10 w-10 shrink-0 overflow-hidden rounded-md">
+                          <img src={url} alt={`Product image ${index + 1}`} className="h-full w-full object-cover" />
+                        </div>
+                        <span className="truncate text-sm">{url}</span>
+                      </div>
+                      <Button 
+                        type="button" 
+                        variant="ghost" 
+                        size="sm" 
+                        onClick={() => removeImageUrl(index)}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ))}
+                </div>
               </div>
               
               <FormField
