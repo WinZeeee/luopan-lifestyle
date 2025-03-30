@@ -17,7 +17,8 @@ export type ProductRow = {
   name: string;
   description: string;
   price: number;
-  image_url: string;
+  thumbnail_url: string;
+  image_urls: string[];
   category: string;
   featured: boolean;
   stock: number;

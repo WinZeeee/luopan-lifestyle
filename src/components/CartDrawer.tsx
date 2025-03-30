@@ -1,4 +1,3 @@
-
 import { ShoppingBag, X, Plus, Minus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart, CartItem } from "@/contexts/CartContext";
@@ -82,8 +81,8 @@ const CartItemCard = ({ item, onRemove, onUpdateQuantity }: CartItemCardProps) =
     <div className="flex items-start gap-3">
       <div className="h-16 w-16 rounded-md overflow-hidden bg-secondary/20">
         <img
-          src={product.imageUrl}
-          alt={product.name}
+          src={item.product.thumbnailUrl}
+          alt={item.product.name}
           className="h-full w-full object-cover"
         />
       </div>

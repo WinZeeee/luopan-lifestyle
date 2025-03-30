@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -119,9 +118,9 @@ const Checkout = () => {
               {state.items.map((item) => (
                 <div key={item.product.id} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded overflow-hidden">
+                    <div className="h-16 w-16 rounded-md overflow-hidden">
                       <img 
-                        src={item.product.imageUrl} 
+                        src={item.product.thumbnailUrl} 
                         alt={item.product.name} 
                         className="h-full w-full object-cover"
                       />
