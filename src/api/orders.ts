@@ -114,3 +114,26 @@ export const updateOrderStatus = async (
     return false;
   }
 };
+
+// New function to update just the order notes
+export const updateOrderNotes = async (
+  id: string,
+  notes: string
+): Promise<boolean> => {
+  try {
+    const { error } = await supabase
+      .from('orders')
+      .update({ notes })
+      .eq('id', id);
+
+    if (error) {
+      console.error("Error updating order notes:", error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Exception updating order notes:", error);
+    return false;
+  }
+};

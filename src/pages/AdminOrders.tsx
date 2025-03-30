@@ -1,13 +1,12 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getOrders, updateOrderStatus } from "@/api/orders";
+import { getOrders, updateOrderStatus, updateOrderNotes } from "@/api/orders";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Loader2, Eye, PackageCheck, Package, Truck, CheckCircle, XCircle } from "lucide-react";
+import { Loader2, Eye, PackageCheck, Package, Truck, CheckCircle, XCircle, Save } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Order } from "@/types/order";
@@ -46,6 +45,7 @@ const AdminOrders = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
   const [notes, setNotes] = useState("");
+  const [isSavingNotes, setIsSavingNotes] = useState(false);
 
   // Format price in VND
   const formatPrice = (price: number) => {
@@ -81,6 +81,28 @@ const AdminOrders = () => {
       console.error(error);
     } finally {
       setIsUpdating(false);
+    }
+  };
+
+  // New function to handle saving just the notes
+  const handleSaveNotes = async () => {
+    if (!selectedOrder) return;
+    
+    setIsSavingNotes(true);
+    try {
+      const success = await updateOrderNotes(selectedOrder.id, notes);
+      
+      if (success) {
+        toast.success("Đã cập nhật ghi chú đơn hàng");
+        refetch();
+      } else {
+        toast.error("Không thể cập nhật ghi chú");
+      }
+    } catch (error) {
+      toast.error("Đã xảy ra lỗi khi cập nhật ghi chú");
+      console.error(error);
+    } finally {
+      setIsSavingNotes(false);
     }
   };
 
@@ -216,12 +238,24 @@ const AdminOrders = () => {
 
                                 <div>
                                   <h3 className="text-sm font-medium mb-2">Ghi chú</h3>
-                                  <Textarea
-                                    value={notes}
-                                    onChange={(e) => setNotes(e.target.value)}
-                                    placeholder="Thêm ghi chú về đơn hàng này"
-                                    className="min-h-[100px]"
-                                  />
+                                  <div className="flex flex-col space-y-2">
+                                    <Textarea
+                                      value={notes}
+                                      onChange={(e) => setNotes(e.target.value)}
+                                      placeholder="Thêm ghi chú về đơn hàng này"
+                                      className="min-h-[100px]"
+                                    />
+                                    <Button 
+                                      variant="outline" 
+                                      size="sm" 
+                                      className="self-end flex items-center gap-1"
+                                      onClick={handleSaveNotes}
+                                      disabled={isSavingNotes || notes === selectedOrder.notes}
+                                    >
+                                      {isSavingNotes ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                                      Lưu ghi chú
+                                    </Button>
+                                  </div>
                                 </div>
 
                                 <div className="space-y-3">
