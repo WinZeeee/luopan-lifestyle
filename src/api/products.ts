@@ -107,8 +107,11 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
 // Delete a product
 export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
+    console.log("Attempting to delete product with ID:", id);
+    
+    // Use a named parameter object to avoid ambiguity
     const { error } = await supabase
-      .rpc('delete_product', { id });
+      .rpc('delete_product', { id: id });
     
     if (error) {
       console.error('Error deleting product:', error);
