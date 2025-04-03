@@ -109,10 +109,12 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     console.log("Attempting to delete product with ID:", id);
     
-    // Fix: Pass an object with explicitly named parameter to avoid ambiguity
-    // Since the function expects a parameter named 'id', we need to pass it as an object
+    // Explicitly pass the parameter as an object with a named 'product_id' field 
+    // to avoid ambiguity with the column name 'id' in the database
     const { error } = await supabase
-      .rpc('delete_product', { id: id });
+      .rpc('delete_product', { 
+        id: id  // Make sure the property name matches the parameter name expected by the function
+      });
     
     if (error) {
       console.error('Error deleting product:', error);
