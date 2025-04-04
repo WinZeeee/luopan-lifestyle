@@ -1,4 +1,3 @@
-
 import { Product, toProduct, toProductRow } from "@/types/product";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -52,7 +51,6 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
     
     console.log("Creating product with data:", productRow);
     
-    // Use the rpc function instead of direct insert to bypass RLS issues
     const { data, error } = await supabase
       .rpc('create_product', productRow)
       .single();
@@ -76,7 +74,6 @@ export const createProduct = async (product: Omit<Product, 'id' | 'createdAt' | 
 // Update an existing product
 export const updateProduct = async (id: string, updates: Partial<Omit<Product, 'id' | 'createdAt' | 'updatedAt'>>): Promise<Product | undefined> => {
   try {
-    // Convert frontend product fields to database column names
     const productRow: any = { id };
     if (updates.name) productRow.name = updates.name;
     if (updates.description) productRow.description = updates.description;
@@ -87,7 +84,6 @@ export const updateProduct = async (id: string, updates: Partial<Omit<Product, '
     if (updates.featured !== undefined) productRow.featured = updates.featured;
     if (updates.stock !== undefined) productRow.stock = updates.stock;
     
-    // Use rpc function instead of direct update to bypass RLS issues
     const { data, error } = await supabase
       .rpc('update_product', productRow)
       .single();
@@ -109,12 +105,9 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     console.log("Attempting to delete product with ID:", id);
     
-    // Use the parameter name that matches the TypeScript definition (id)
-    // The actual database function now expects product_id, but the TypeScript 
-    // definition still expects id, so we need to use id here
     const { error } = await supabase
       .rpc('delete_product', { 
-        id: id  // This matches what the TypeScript definition expects
+        product_id: id
       });
     
     if (error) {
