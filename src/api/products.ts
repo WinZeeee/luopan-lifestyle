@@ -1,3 +1,4 @@
+
 import { Product, toProduct, toProductRow } from "@/types/product";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -108,10 +109,12 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     console.log("Attempting to delete product with ID:", id);
     
-    // Use the corrected parameter name that matches the updated database function
+    // Use the parameter name that matches the TypeScript definition (id)
+    // The actual database function now expects product_id, but the TypeScript 
+    // definition still expects id, so we need to use id here
     const { error } = await supabase
       .rpc('delete_product', { 
-        product_id: id  // This parameter name now matches what we defined in the SQL function
+        id: id  // This matches what the TypeScript definition expects
       });
     
     if (error) {
