@@ -210,7 +210,7 @@ export type Database = {
           }
       delete_product: {
         Args: {
-          id: string
+          product_id: string
         }
         Returns: boolean
       }

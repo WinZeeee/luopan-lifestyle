@@ -1,4 +1,3 @@
-
 import { Product, toProduct, toProductRow } from "@/types/product";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -109,11 +108,10 @@ export const deleteProduct = async (id: string): Promise<boolean> => {
   try {
     console.log("Attempting to delete product with ID:", id);
     
-    // Looking at the Supabase function definition, it expects a parameter named 'id'
-    // But we need to rename it to avoid ambiguity with the table column
+    // Use the corrected parameter name that matches the updated database function
     const { error } = await supabase
       .rpc('delete_product', { 
-        product_id: id  // Rename parameter to avoid ambiguity with table column
+        product_id: id  // This parameter name now matches what we defined in the SQL function
       });
     
     if (error) {
